@@ -19,12 +19,15 @@ The following checks were actually performed. They do not count as the two requi
 - Latest in-app browser visual QA at 360/835/1440 px: larger readable copy, contained typography, no horizontal overflow. Mobile Tab enters the opened navigation; Escape closes it and restores focus. Section links focus their heading below the sticky header. Actual scrolling changes room depth/rotation and card offsets; Motion off stops camera/scroll transforms and leaves content visible.
 - Review focus restoration, copy live feedback, strict external HTTPS links, role switches, hashing races and uncertain receipt recovery are covered by controlled component tests. A full human keyboard walkthrough and system reduced-motion browser check remain unrun.
 - Browser findings fixed: mobile address wrapping, cramped subtitle leading, oversized inherited utility links, clipped decorative lettering and route scroll position after lower-gallery navigation.
+- User-requested Cloudflare Quick Tunnel: https://americans-gardening-banners-keep.trycloudflare.com/. Chrome loaded Home, direct /create, completed deal and resolved dispute over HTTPS; existing deal state was fetched from real Devnet. The current production build is served by loopback preview on port 4173 with a fixed origin Host header. Human signatures and payouts from this frontend remain NOT RUN.
 
 Rows below retain `NOT RUN` for the human acceptance session; automated or agent checks above are separate evidence.
 
 ## Joint Phantom acceptance — prepared, NOT RUN
 
-Use the local `/create` route in a browser with Phantom on this PC. The loopback URL cannot be opened on a teammate's computer or phone. Three new distinct signing keypairs were generated for this Devnet-only test at the user's request; private import files are outside Git. Managing all three roles in one Phantom is a test setup, not independent arbitration.
+For the friend session use https://americans-gardening-banners-keep.trycloudflare.com/create in a browser with Phantom. The computer, production preview and Cloudflare tunnel must stay running. The local loopback `/create` route is available only on this PC. Three new distinct signing keypairs were generated for this Devnet-only test at the user's request; private import files are outside Git. Managing all three roles in one Phantom is a test setup, not independent arbitration. To use the friend's own Phantom account as creator, enter that signing wallet's public address before creation and ensure it has Devnet funds for the deposit and fees. Select an arbiter wallet whose holder can sign; the deployment's demo default does not grant either tester access.
+
+Localhost and each Cloudflare hostname have separate draft/receipt storage. Keep one public hostname and tab during a pending or uncertain operation; do not repeat an operation from another tab or origin until its actual signature and state have been checked. Both participants use the same created deal link with their respective accounts. A dispute requires a separate fresh deal after the completion walkthrough.
 
 | Role | Public address | Suggested initial test SOL |
 | --- | --- | ---: |
@@ -32,7 +35,7 @@ Use the local `/create` route in a browser with Phantom on this PC. The loopback
 | Creator | `48sEAFKWoLqucJbiqSq1QZ1zs5hTr9ZMjkXJnwLbwsy8` | 0.005 |
 | Arbiter | `DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR` | 0.005 |
 
-Initial balances were checked at zero. Funding and import are pending. After import, verify the displayed public address for each role. Disconnect on the site, select the next account in Phantom, then reconnect when changing role.
+Initial balances were checked at zero. Read-only Devnet RPC verified **1 SOL (1,000,000,000 lamports) in each wallet** at `2026-10-12T22:55:57.5107378Z`, confirmed slot `510421280`. The Devnet genesis, executable program, ProgramData address, deploy slot and upgrade authority matched the deployment manifest. Phantom import and human signing remain pending / **NOT RUN**. After import, verify the displayed public address for each role. Disconnect on the site, select the next account in Phantom, then reconnect when changing role.
 
 Set each new deal budget to **0.001 SOL**: Concept 0.0002, Draft 0.0003, Final 0.0005, creator deposit 0.0001. Read-only RPC returned 0.01032256 SOL rent for a 1904-byte deal on 2026-10-13; current SDK estimates rent and fees before signing. Rent stays in the closed account for history. Suggested funding is a test allowance, not a fixed fee quote.
 

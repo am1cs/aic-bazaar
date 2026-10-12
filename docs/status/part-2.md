@@ -28,11 +28,12 @@ Integration checkpoint — 2026-10-13: PR #1 remains open/unmerged. Its current 
 
 The create form now accepts a human-controlled arbiter wallet before creation, defaulting to the deployment address. This removes dependence on the demo arbiter during joint acceptance without changing SDK, contract, immutable roles or settlement rules. The chosen address is validated and reviewed; editing it invalidates the old confirmation. Phantom selection and the fresh test draft were checked in the browser. Signing remains NOT RUN.
 
-Three fresh local Devnet test wallets were generated at the user's request. Their private keys are stored outside the repository with restricted directory access and never printed. Public balances were checked at zero. Funding, Phantom import and signatures await the human; the test plan is in docs/usability.md.
+Three fresh local Devnet test wallets were generated at the user's request. Their private keys are stored outside the repository with restricted directory access and never printed. Initial public balances were checked at zero. Read-only Devnet RPC verified 1 SOL (1,000,000,000 lamports) in each wallet at 2026-10-12T22:55:57.5107378Z, confirmed slot 510421280; genesis and public deployment metadata matched the manifest. Phantom import and human signatures remain pending / NOT RUN; the test plan is in docs/usability.md.
 
 Frontend implementation baseline: 05cb977; the latest local visual checkpoint is recorded in the branch history.
-Public site: not deployed; user explicitly chose local-only work.
+Public test site: https://americans-gardening-banners-keep.trycloudflare.com/ — a temporary Cloudflare Quick Tunnel requested by the user on 2026-10-13 for testing with a friend. It serves the existing production build through loopback preview on port 4173; the computer, preview and tunnel must stay running. Vercel publication remains deferred.
 Local preview: http://127.0.0.1:5173/; new deal: http://127.0.0.1:5173/create while the development server runs. Use a browser with Phantom on this PC; this loopback URL is not remotely accessible.
+Public browser checks: Home, direct completed-deal and resolved-dispute routes loaded over HTTPS and fetched their real Devnet state; direct /create loaded. Production assets contain no Vite dev client, sourcemaps or key files. No human signing has been performed. Localhost drafts/receipts do not transfer to the public hostname; keep one URL/tab for each pending operation.
 SDK integration: actual part 1 source and deployed Devnet program.
 Program ID: 8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX.
 PR: not opened; local implementation is committed.
