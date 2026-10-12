@@ -1,0 +1,17 @@
+node_modules/
+dist/
+target/
+.anchor/
+.vercel/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+test-results/
+playwright-report/
+.local/
+secrets/
+*-keypair.json
+id.json

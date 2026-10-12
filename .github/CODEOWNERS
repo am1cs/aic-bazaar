@@ -1,0 +1,14 @@
+# Review routing only; this file does not enforce branch protection.
+* @am1cs @destinesia7187
+/contracts/ @am1cs
+/sdk/ @am1cs
+/deployment/ @am1cs
+/docs/PART-1.md @am1cs
+/docs/status/part-1.md @am1cs
+/docs/technical.md @am1cs
+/docs/pitch.md @am1cs
+/web/ @destinesia7187
+/docs/PART-2.md @destinesia7187
+/docs/status/part-2.md @destinesia7187
+/docs/demo.md @destinesia7187
+/docs/usability.md @destinesia7187
