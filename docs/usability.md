@@ -10,7 +10,7 @@ The checklist is a review plan, not a test report. Record the environment, brows
 
 The following checks were actually performed. They do not count as the two required human usability sessions.
 
-- `npm test`: 242 controlled tests in 11 files passed. TypeScript and latest production build passed (303 modules).
+- `npm test`: 254 controlled tests in 11 files passed. TypeScript and latest production build passed (303 modules). Selected-arbiter review, validation and draft migration are covered.
 - `npm run verify:devnet`: three actual read-only checks passed, including exact public asset hashes against completed deal submissions.
 - Chrome, local preview: 360 px Home/Create/completed deal, 768 px Home/Create, 1440 px Home/resolved dispute. Page scroll width matched client width; no horizontal overflow.
 - The Create funding action remains disabled without a wallet. Byte counters were checked with multibyte text. Invalid Home deal addresses show an alert and `aria-invalid`.
@@ -21,6 +21,28 @@ The following checks were actually performed. They do not count as the two requi
 - Browser findings fixed: mobile address wrapping, cramped subtitle leading, oversized inherited utility links, clipped decorative lettering and route scroll position after lower-gallery navigation.
 
 Rows below retain `NOT RUN` for the human acceptance session; automated or agent checks above are separate evidence.
+
+## Joint Phantom acceptance — prepared, NOT RUN
+
+Use the local `/create` route in a browser with Phantom on this PC. The loopback URL cannot be opened on a teammate's computer or phone. Three new distinct signing keypairs were generated for this Devnet-only test at the user's request; private import files are outside Git. Managing all three roles in one Phantom is a test setup, not independent arbitration.
+
+| Role | Public address | Suggested initial test SOL |
+| --- | --- | ---: |
+| Customer | `J5YwFGz6KRQBcEVUyeTREaPWBn8pkNzdQ4mXHY88A7ue` | 0.05 |
+| Creator | `48sEAFKWoLqucJbiqSq1QZ1zs5hTr9ZMjkXJnwLbwsy8` | 0.005 |
+| Arbiter | `DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR` | 0.005 |
+
+Initial balances were checked at zero. Funding and import are pending. After import, verify the displayed public address for each role. Disconnect on the site, select the next account in Phantom, then reconnect when changing role.
+
+Set each new deal budget to **0.001 SOL**: Concept 0.0002, Draft 0.0003, Final 0.0005, creator deposit 0.0001. Read-only RPC returned 0.01032256 SOL rent for a 1904-byte deal on 2026-10-13; current SDK estimates rent and fees before signing. Rent stays in the closed account for history. Suggested funding is a test allowance, not a fixed fee quote.
+
+1. **Completion:** customer creates/funds; creator accepts; creator submits Concept, Draft and Final in order; customer reviews and pays each. Creator receives 0.0002, 0.0003, then 0.0006 including the returned deposit. Expect `completed`, zero remaining budget/bond, retained material references, and eight confirmed transactions.
+2. **Refund dispute:** create another deal and accept; submit/pay Concept; customer or creator opens a dispute before Draft submission; the selected arbiter reviews `refund` and signs. Customer receives 0.0008 and creator receives deposit 0.0001. Expect `resolved`, retained paid Concept, and six confirmed transactions.
+3. **Other outcomes use separate fresh deals:** after paid Concept, a submitted Draft permits `pay_current` (customer 0.0005; creator 0.0004 including deposit). `creator_breach` pays customer 0.0009 and creator zero. Each outcome terminates its deal; never attempt all three on one closed deal.
+
+Use synthetic original material files from `web/public/demo/` with their matching pinned HTTPS references from the existing completed demo. The violet landing previews are separate covers and must not be substituted as if they had the original hashes. Set increasing future deadlines; payment does not require waiting for a deadline or the informational 24-hour review period.
+
+For every operation record the new deal PDA, role, signature, confirmed status, revision/hash and refreshed state. Verify wallet/escrow deltas with RPC or Explorer and account for `meta.fee`; the frontend does not show live wallet balances. A confirmed receipt with failed refresh needs refresh. An unknown outcome needs signature/Explorer verification before any retry. No acceptance transaction has been signed or sent yet.
 
 ## Visual and navigation review
 

@@ -30,6 +30,8 @@ The sticky header provides real Create/Explore links, section navigation, docume
 
 No mutations run automatically. Read-only `getDeal()` works without Phantom. Connect a participant wallet for an explicit operation. Unknown transaction outcomes lock further mutations; confirm the saved signature before repeating anything. A confirmed receipt with an account-refresh error offers refresh, not another payment.
 
+Before creating a deal, choose a signing wallet for the human arbiter. The form defaults to the public deployment arbiter but accepts another validated distinct wallet for joint testing. Its reviewed address becomes immutable on creation. See `docs/usability.md` for the two fresh-deal Phantom payout/dispute acceptance steps.
+
 The session journal stores only public attempt/receipt metadata; balances always come from the chain. If a page reloads before the SDK returns a signature, recovery is limited to manual wallet/Explorer verification. Unknown creation recovery does not yet expose the generated PDA through the SDK error. These limits are documented in the working specification.
 
 `npm test` uses controlled SDK/RPC boundaries; it does not prove live Phantom signing. `verify:devnet` performs actual read-only SDK checks against the two deployed demonstration deals. Human wallet operations, two usability sessions, and final video publishing are recorded separately, with unrun checks labeled honestly.

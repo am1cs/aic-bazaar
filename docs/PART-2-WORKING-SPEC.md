@@ -146,7 +146,7 @@ Vite/TypeScript должны разрешать исходники соседн�
 | Title | Непустой, до 64 UTF-8 bytes |
 | Brief | Непустой, до 200 UTF-8 bytes |
 | Creator wallet | Валидный signing wallet address |
-| Arbiter | Согласованный адрес из конфигурации; виден полностью до подписи |
+| Arbiter | Signing wallet согласованного человека; по умолчанию адрес из конфигурации, можно выбрать доступный кошелёк до создания. Адрес виден полностью до подписи и неизменен после создания |
 | Budget SOL | Строка, 0.001–1 SOL включительно; максимум 9 знаков после точки |
 | Concept/Draft/Final deadlines | Три будущих integer Unix seconds, строго возрастают |
 | References URL | Пустая строка или валидный HTTPS URL до 200 UTF-8 bytes |
@@ -397,7 +397,7 @@ P0: ложный платёжный успех, неправильный пол�
 - [x] Stale/revision/hash, double click и async races проверены controlled tests.
 - [x] Cancelled/rejected/failed/unknown/confirmed-but-unreadable различаются — controlled SDK/RPC boundary tests.
 - [x] Recovery ограничения раскрыты; обнаруженные frontend races и риск повторного create исправлены. Реальные wallet flows ещё не приняты.
-- [x] Typecheck, 242 controlled tests, 3 Devnet read-only checks и production build прошли; исходный clean checkout `05cb977` собрался после `npm ci`.
+- [x] Typecheck, 254 controlled tests, 3 Devnet read-only checks и production build прошли; исходный clean checkout `05cb977` собрался после `npm ci`.
 - [ ] Vercel direct routes/reload/view без wallet проверены.
 - [x] Fixtures исключены из production transaction path; в web исходниках/config только публичные данные.
 - [ ] Два фактических UX-прогона записаны.
@@ -417,3 +417,5 @@ P0: ложный платёжный успех, неправильный пол�
 | 2026-10-13 | По уточнению пользователя добавлена 3D типографическая сцена в духе Leonardo, закреплённое меню с рабочими dropdown/якорями, более крупный контрастный текст и движение от прокрутки; все три нижних preview фиолетовые, видео/download controls убраны. 242 tests/TypeScript/build прошли; browser QA 360/835/1440 px, Tab/Escape, focus/anchor, Motion pause и реальная scroll-transform проверены | Human Phantom acceptance, два человеческих UX-прогона, запись demo и изменение системного reduced-motion в браузере ещё не выполнены; сайт остаётся локальным |
 
 При реализации обновлять журнал проверенными checkpoint results. Наличие этого документа не является evidence работающих транзакций.
+
+Checkpoint совместной проверки 2026-10-13: PR #1 всё ещё открыт; актуальный `a3502ca` полностью присутствует в нашей ветке. Повторные три Devnet read-only checks прошли. Для нового человеческого прогона добавлен выбор арбитра до создания сделки с валидацией/повторным review; SDK, контракт и shared API не менялись. По запросу пользователя созданы три отдельные Devnet test keypairs вне Git; их публичные балансы равны нулю. Пополнение, импорт в Phantom и реальные подписи ожидают человека. Сценарии выплат и спора — docs/usability.md.

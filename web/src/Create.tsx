@@ -9,10 +9,10 @@ import { Field, Address, Alert, Confirmation, External } from './components';
 import { parseSol, splitAmounts, formatSol } from './lib/money';
 import { validateCreateForm, validateWalletAddress } from './lib/validation';
 import type { CreateDealInput } from '../../shared/api';
-const empty = { title: '', brief: '', creator: '', referencesUrl: '', budgetSol: '0.30', deadlines: ['', '', ''] as [string, string, string] };
+const empty = { title: '', brief: '', creator: '', arbiter: deployment.arbiterAddress, referencesUrl: '', budgetSol: '0.30', deadlines: ['', '', ''] as [string, string, string] };
 const DRAFT_KEY = 'aic-bazaar.create-draft.v1';
 export default function Create() {
-  const [form, setForm] = useState(() => { try { const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? 'null'); if (!draft || !['title','brief','creator','referencesUrl','budgetSol'].every(k=>typeof draft[k]==='string') || !Array.isArray(draft.deadlines) || draft.deadlines.length!==3 || !draft.deadlines.every((x:unknown)=>typeof x==='string')) return empty; return {title:draft.title as string,brief:draft.brief as string,creator:draft.creator as string,referencesUrl:draft.referencesUrl as string,budgetSol:draft.budgetSol as string,deadlines:draft.deadlines as [string,string,string]}; } catch { return empty; } });
+  const [form, setForm] = useState(() => { try { const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? 'null'); if (!draft || !['title','brief','creator','referencesUrl','budgetSol'].every(k=>typeof draft[k]==='string') || (Object.prototype.hasOwnProperty.call(draft,'arbiter') && typeof draft.arbiter!=='string') || !Array.isArray(draft.deadlines) || draft.deadlines.length!==3 || !draft.deadlines.every((x:unknown)=>typeof x==='string')) return empty; return {title:draft.title as string,brief:draft.brief as string,creator:draft.creator as string,arbiter:typeof draft.arbiter==='string'?draft.arbiter:deployment.arbiterAddress,referencesUrl:draft.referencesUrl as string,budgetSol:draft.budgetSol as string,deadlines:draft.deadlines as [string,string,string]}; } catch { return empty; } });
   const [error, setError] = useState(''); const [terms, setTerms] = useState<CreateDealInput | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const reviewed = useRef<{ terms: CreateDealInput; wallet: string } | null>(null);
@@ -40,7 +40,12 @@ export default function Create() {
     else if (message.includes('deadlines') || message.startsWith('Deadlines ')) fields = ['deadline-0', 'deadline-1', 'deadline-2'];
     else {
       try { validateWalletAddress(form.creator); } catch { fields = ['creator']; }
-      if (message.includes('different wallets') && (form.creator === walletAddress || form.creator === deployment.arbiterAddress)) fields = ['creator'];
+      try { validateWalletAddress(form.arbiter); } catch { fields.push('arbiter'); }
+      if (message.includes('different wallets')) {
+        fields = [];
+        if (form.arbiter === walletAddress || form.arbiter === form.creator) fields.push('arbiter');
+        if (form.creator === walletAddress || form.creator === form.arbiter) fields.push('creator');
+      }
     }
     reviewed.current = null; setTerms(null); setError(message);
     setFieldErrors(Object.fromEntries(fields.map(id => [id, message])));
@@ -49,7 +54,7 @@ export default function Create() {
   function review(event: FormEvent) {
     event.preventDefault();
     try {
-      const checked = validateCreateForm({ ...form, client: walletAddress ?? '', arbiter: deployment.arbiterAddress });
+      const checked = validateCreateForm({ ...form, client: walletAddress ?? '' });
       reviewed.current = { terms: checked, wallet: walletAddress ?? '' }; setTerms(checked); setError(''); setFieldErrors({});
     } catch (e) { validationError(e); }
   }
@@ -58,7 +63,7 @@ export default function Create() {
     if (!readiness.ready) return;
     const submittedDraft = JSON.stringify(form);
     let checked: CreateDealInput;
-    try { checked = validateCreateForm({ ...form, client: walletAddress, arbiter: deployment.arbiterAddress }); }
+    try { checked = validateCreateForm({ ...form, client: walletAddress }); }
     catch (e) { validationError(e); return; }
     // Consume the reviewed intent before calling the controller. A later recovered
     // confirmation must never re-enable the old request and fund another deal.
@@ -80,7 +85,7 @@ export default function Create() {
     <Field id="references" label="Reference link · optional" value={form.referencesUrl} max={200} error={fieldErrors.references}><input id="references" type="url" value={form.referencesUrl} onChange={e => update('referencesUrl', e.target.value)} placeholder="https://…" /></Field>
     {(['Concept','Draft','Final'] as const).map((name, index) => <Field key={name} id={`deadline-${index}`} label={`${name} deadline`} error={fieldErrors[`deadline-${index}`]}><input id={`deadline-${index}`} type="datetime-local" value={form.deadlines[index]} required onChange={e => { const deadlines = [...form.deadlines] as [string,string,string]; deadlines[index] = e.target.value; update('deadlines', deadlines); }} /></Field>)}
     <p className="field-help span-two">Times shown in {Intl.DateTimeFormat().resolvedOptions().timeZone}. Deadlines must be future and increasing; they do not automatically release funds or impose penalties.</p>
-    <div className="span-two"><label>Named human arbiter</label><Address value={deployment.arbiterAddress} label="arbiter" /><p className="field-help">This arbiter can settle disputed funds under the agreed rules. Participants and terms cannot change after creation.</p></div>
+    <div className="span-two"><Field id="arbiter" label="Arbiter wallet" help="Choose a human who can sign from this wallet to resolve disputes. Different from your wallet and the creator; fixed after creation." error={fieldErrors.arbiter}><input id="arbiter" value={form.arbiter} onChange={e => update('arbiter', e.target.value)} required placeholder="Solana wallet address" autoComplete="off" /></Field><p className="field-help">Only this named arbiter can settle disputed funds under the agreed rules. Participants and terms cannot change after creation.</p></div>
   </fieldset>{error && <Alert tone="error">{error}</Alert>}<div className="action-row"><button className="button primary" type="submit" disabled={!walletAddress || blocked || !readiness.ready}>Review & fund</button></div></form>
   <aside className="card"><span className="eyebrow">YOUR AGREEMENT</span><h2>Pay for accepted progress.</h2><div className="money-grid">{['Concept · 20%','Draft · 30%','Final · remaining 50%'].map((name,index) => <div className="metric" key={name}><span>{name}</span><strong>{amounts ? formatSol(amounts.milestones[index].toString()) : '—'} <small>SOL</small></strong></div>)}</div><div className="divider"/><p><strong>Creator deposit</strong><br/>{amounts ? formatSol(amounts.bond.toString()) : '—'} SOL · 10% of the budget</p><p className="field-help">Account rent and network fees are separate. The final accepted stage also returns the deposit. No platform fee in this version.</p><div className="divider"/><p>Concept: three key frames.<br/>Draft: 15 seconds, vertical.<br/>Final: 1080×1920 MP4, CTA, no watermark.</p></aside></div>
   {terms && <Confirmation title="Confirm the complete agreement" busy={blocked || !readiness.ready} onConfirm={() => void create()} onClose={() => { reviewed.current = null; setTerms(null); }}><p>You are reserving <strong>{formatSol(terms.budgetLamports)} test SOL</strong>, plus account rent and network fees. Your creator must deposit 10% to start.</p><span className="field-help">Customer wallet</span><Address value={walletAddress ?? ''} label="customer" /><span className="field-help">Creator wallet</span><Address value={terms.creator} label="creator" /><span className="field-help">Named human arbiter</span><Address value={terms.arbiter} label="arbiter" /><p>Only this named arbiter can settle a dispute. Review all terms above before signing.</p></Confirmation>}

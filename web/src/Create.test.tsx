@@ -40,11 +40,12 @@ vi.mock('./transactions/useOperation', () => ({
 const DRAFT_KEY = 'aic-bazaar.create-draft.v1';
 const clientAddress = Keypair.generate().publicKey.toBase58();
 const creatorAddress = Keypair.generate().publicKey.toBase58();
+const selectedArbiterAddress = Keypair.generate().publicKey.toBase58();
 const dealAddress = 'E6z3ZUSy9up26ttcYUDXUBWhGGpbw1y6trfHN4W61C8d';
 const signature = 'public-controlled-create-signature';
 const validDraft = {
   title: 'Vertical launch ad', brief: 'Fifteen seconds, vertical, with an agreed CTA.',
-  creator: creatorAddress, referencesUrl: 'https://example.com/reference', budgetSol: '0.001000001',
+  creator: creatorAddress, arbiter: deployment.arbiterAddress, referencesUrl: 'https://example.com/reference', budgetSol: '0.001000001',
   deadlines: ['2099-01-02T12:00', '2099-01-03T12:00', '2099-01-04T12:00'] as [string, string, string],
 };
 
@@ -99,7 +100,7 @@ function input(label: string): HTMLInputElement | HTMLTextAreaElement {
 function fillForm(overrides: Partial<typeof validDraft> = {}) {
   const values = { ...validDraft, ...overrides };
   for (const [label, value] of [
-    ['Project title', values.title], ['Brief', values.brief], ['Creator wallet', values.creator],
+    ['Project title', values.title], ['Brief', values.brief], ['Creator wallet', values.creator], ['Arbiter wallet', values.arbiter],
     ['Reference link · optional', values.referencesUrl], ['Total budget · Test SOL', values.budgetSol],
     ['Concept deadline', values.deadlines[0]], ['Draft deadline', values.deadlines[1]], ['Final deadline', values.deadlines[2]],
   ]) fireEvent.change(input(label), { target: { value } });
@@ -135,6 +136,7 @@ describe('creation validation and funding review', () => {
     JSON.stringify({ ...validDraft, title: 5 }),
     JSON.stringify({ ...validDraft, deadlines: ['2099-01-02T12:00'] }),
     JSON.stringify({ ...validDraft, deadlines: [null, null, null] }),
+    ...[null, 5, {}, []].map(arbiter => JSON.stringify({ ...validDraft, arbiter })),
   ])('ignores a corrupt saved draft rather than treating it as deal state: %s', (raw) => {
     localStorage.setItem(DRAFT_KEY, raw);
     renderPage();
@@ -142,7 +144,29 @@ describe('creation validation and funding review', () => {
     expect(input('Brief').value).toBe('');
     expect(input('Total budget · Test SOL').value).toBe('0.30');
     expect(input('Concept deadline').value).toBe('');
+    expect(input('Arbiter wallet').value).toBe(deployment.arbiterAddress);
     expect(screen.queryByText('Confirm the complete agreement')).toBeNull();
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+  });
+
+  it('migrates an old v1 draft without an arbiter to the configured default', () => {
+    const legacy = Object.fromEntries(Object.entries(validDraft).filter(([key]) => key !== 'arbiter'));
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(legacy));
+    renderPage();
+    expect(input('Project title').value).toBe(validDraft.title);
+    expect(input('Arbiter wallet').value).toBe(deployment.arbiterAddress);
+    expect((input('Arbiter wallet') as HTMLInputElement).required).toBe(true);
+    expect(JSON.parse(localStorage.getItem(DRAFT_KEY)!)).toEqual(validDraft);
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+  });
+
+  it('restores the selected arbiter from a current draft without changing it to the default', () => {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...validDraft, arbiter: selectedArbiterAddress }));
+    renderPage();
+    expect(input('Arbiter wallet').value).toBe(selectedArbiterAddress);
+    review();
+    const confirmation = screen.getByRole('region', { name: 'Confirm the complete agreement' });
+    expect(confirmation.textContent).toContain(selectedArbiterAddress);
     expect(mocks.createDeal).not.toHaveBeenCalled();
   });
 
@@ -230,6 +254,66 @@ describe('creation validation and funding review', () => {
     expect(mocks.createDeal).toHaveBeenCalledExactlyOnceWith(expectedTerms());
     expect(localStorage.getItem(DRAFT_KEY)).toBeNull();
     expect(screen.getByText('This transaction is confirmed on Solana Devnet.')).toBeDefined();
+  });
+
+  it('reviews the exact selected arbiter and passes it to the SDK only after confirmation', async () => {
+    renderPage();
+    fillForm({ arbiter: selectedArbiterAddress });
+    review();
+    const confirmation = screen.getByRole('region', { name: 'Confirm the complete agreement' });
+    expect(confirmation.textContent).toContain(selectedArbiterAddress);
+    expect(confirmation.textContent).not.toContain(deployment.arbiterAddress);
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm in wallet' }));
+    await screen.findByRole('heading', { name: `Opened deal ${dealAddress}` });
+    expect(mocks.createDeal).toHaveBeenCalledExactlyOnceWith({ ...expectedTerms(), arbiter: selectedArbiterAddress });
+  });
+
+  it.each([
+    { arbiter: 'not-a-wallet', message: 'Enter a valid Solana wallet address.' },
+    { arbiter: '11111111111111111111111111111111', message: 'Participants must be non-default wallet addresses capable of signing.' },
+    { arbiter: clientAddress, message: 'Customer, creator, and arbiter must be different wallets.' },
+  ])('blocks and focuses an invalid or duplicate arbiter: $arbiter', ({ arbiter, message }) => {
+    renderPage();
+    fillForm({ arbiter });
+    review();
+    const control = input('Arbiter wallet');
+    expect(control.getAttribute('aria-invalid')).toBe('true');
+    expect(control.getAttribute('aria-describedby')?.split(' ')).toContain('arbiter-error');
+    expect(document.getElementById('arbiter-error')?.textContent).toBe(message);
+    expect(document.activeElement).toBe(control);
+    expect(screen.queryByRole('button', { name: 'Confirm in wallet' })).toBeNull();
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+  });
+
+  it('marks both participant fields when the creator is also the arbiter', () => {
+    renderPage();
+    fillForm({ arbiter: creatorAddress });
+    review();
+    expect(input('Creator wallet').getAttribute('aria-invalid')).toBe('true');
+    expect(input('Arbiter wallet').getAttribute('aria-invalid')).toBe('true');
+    expect(input('Creator wallet').getAttribute('aria-describedby')?.split(' ')).toContain('creator-error');
+    expect(input('Arbiter wallet').getAttribute('aria-describedby')?.split(' ')).toContain('arbiter-error');
+    expect(document.activeElement).toBe(input('Arbiter wallet'));
+    expect(screen.queryByRole('button', { name: 'Confirm in wallet' })).toBeNull();
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+  });
+
+  it('consumes the old review when the arbiter changes and requires a new review before signing', async () => {
+    renderPage();
+    fillForm();
+    review();
+    const oldConfirmation = screen.getByRole('button', { name: 'Confirm in wallet' });
+    fireEvent.change(input('Arbiter wallet'), { target: { value: selectedArbiterAddress } });
+    expect(screen.queryByRole('button', { name: 'Confirm in wallet' })).toBeNull();
+    fireEvent.click(oldConfirmation);
+    expect(mocks.createDeal).not.toHaveBeenCalled();
+    expect(JSON.parse(localStorage.getItem(DRAFT_KEY)!).arbiter).toBe(selectedArbiterAddress);
+    review();
+    expect(screen.getByRole('region', { name: 'Confirm the complete agreement' }).textContent).toContain(selectedArbiterAddress);
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm in wallet' }));
+    await screen.findByRole('heading', { name: `Opened deal ${dealAddress}` });
+    expect(mocks.createDeal).toHaveBeenCalledExactlyOnceWith({ ...expectedTerms(), arbiter: selectedArbiterAddress });
   });
 
   it('keeps funding disabled without a connected wallet while allowing draft preparation', () => {
