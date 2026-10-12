@@ -1,0 +1,159 @@
+{
+  "cluster": "devnet",
+  "verifiedAt": "2026-10-12T21:00:43.329Z",
+  "programId": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+  "successfulReceiptsChecked": 17,
+  "completedDeal": {
+    "address": "E6z3ZUSy9up26ttcYUDXUBWhGGpbw1y6trfHN4W61C8d",
+    "client": "F5zg3MGkU21WMqtFeJ2c7xbpFs1azJixEq3a3BGb1gZK",
+    "creator": "3opYFTZmNEaRN9xbo3hHwsQmRmuha48aZe6R4RiSjgWA",
+    "arbiter": "EJjQVY91fvucyNDDFKH6C8sX8keKA1z7ZXKC7F5h1ski",
+    "title": "GLOW — completed demo",
+    "brief": "Synthetic fictional-brand ad. Three approved keyframes, 15-second vertical draft, final 1080x1920 MP4 with CREATE YOUR MOMENT CTA. Demonstration only; no commercial customer.",
+    "referencesUrl": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/concept.svg",
+    "templateVersion": 1,
+    "budgetLamports": "300000000",
+    "bondLamports": "30000000",
+    "remainingBudgetLamports": "0",
+    "lockedBondLamports": "0",
+    "rentReserveLamports": "10322560",
+    "status": "completed",
+    "currentMilestone": null,
+    "milestones": [
+      {
+        "index": 0,
+        "amountLamports": "60000000",
+        "dueAt": 1791925070,
+        "submission": {
+          "url": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/concept.svg",
+          "sha256": "a8a038a29b73680836d2ad7664298603760f7b2f39a234b008f79153bfab1097",
+          "revision": 1,
+          "submittedAt": 1791838670
+        },
+        "paidAt": 1791838674
+      },
+      {
+        "index": 1,
+        "amountLamports": "90000000",
+        "dueAt": 1792011470,
+        "submission": {
+          "url": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/draft.mp4",
+          "sha256": "c38cc90894fa4562841bfa63f9eba3229b9a48d5c98622d9e07dcdcd4e360734",
+          "revision": 1,
+          "submittedAt": 1791838679
+        },
+        "paidAt": 1791838685
+      },
+      {
+        "index": 2,
+        "amountLamports": "150000000",
+        "dueAt": 1792097870,
+        "submission": {
+          "url": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/final.mp4",
+          "sha256": "7c43d2efe180c9053abf312ec1adeee61cbad742b6583d53a6af429cac27d1a0",
+          "revision": 1,
+          "submittedAt": 1791838692
+        },
+        "paidAt": 1791838698
+      }
+    ],
+    "dispute": null,
+    "resolution": null,
+    "createdAt": 1791838661
+  },
+  "resolvedDeal": {
+    "address": "98jXr37FrE4wYP7ZMzyXY9ELsDhhtdTsqz4wHnsyUUMN",
+    "client": "F5zg3MGkU21WMqtFeJ2c7xbpFs1azJixEq3a3BGb1gZK",
+    "creator": "3opYFTZmNEaRN9xbo3hHwsQmRmuha48aZe6R4RiSjgWA",
+    "arbiter": "EJjQVY91fvucyNDDFKH6C8sX8keKA1z7ZXKC7F5h1ski",
+    "title": "GLOW — resolved demo",
+    "brief": "Synthetic fictional-brand ad. Three approved keyframes, 15-second vertical draft, final 1080x1920 MP4 with CREATE YOUR MOMENT CTA. Demonstration only; no commercial customer.",
+    "referencesUrl": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/concept.svg",
+    "templateVersion": 1,
+    "budgetLamports": "300000000",
+    "bondLamports": "30000000",
+    "remainingBudgetLamports": "0",
+    "lockedBondLamports": "0",
+    "rentReserveLamports": "10322560",
+    "status": "resolved",
+    "currentMilestone": null,
+    "milestones": [
+      {
+        "index": 0,
+        "amountLamports": "60000000",
+        "dueAt": 1791925113,
+        "submission": {
+          "url": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/concept.svg",
+          "sha256": "a8a038a29b73680836d2ad7664298603760f7b2f39a234b008f79153bfab1097",
+          "revision": 1,
+          "submittedAt": 1791838712
+        },
+        "paidAt": 1791838717
+      },
+      {
+        "index": 1,
+        "amountLamports": "90000000",
+        "dueAt": 1792011513,
+        "submission": {
+          "url": "https://github.com/am1cs/aic-bazaar/blob/80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f/deployment/demo-assets/draft.mp4",
+          "sha256": "c38cc90894fa4562841bfa63f9eba3229b9a48d5c98622d9e07dcdcd4e360734",
+          "revision": 1,
+          "submittedAt": 1791838721
+        },
+        "paidAt": null
+      },
+      {
+        "index": 2,
+        "amountLamports": "150000000",
+        "dueAt": 1792097913,
+        "submission": null,
+        "paidAt": null
+      }
+    ],
+    "dispute": {
+      "openedBy": "F5zg3MGkU21WMqtFeJ2c7xbpFs1azJixEq3a3BGb1gZK",
+      "reason": "Demo scenario: campaign paused after concept approval; parties disagree about proceeding with the draft.",
+      "openedAt": 1791838725
+    },
+    "resolution": {
+      "outcome": "refund",
+      "reason": "Demo settlement: retain paid concept, refund remaining 0.24 SOL to client, and return 0.03 SOL bond; no creator breach.",
+      "resolvedAt": 1791838730
+    },
+    "createdAt": 1791838703
+  },
+  "movements": [
+    {
+      "operation": "completed:approve:0",
+      "signature": "3L6A2jQWR7NUAkKjJ3khQCEMzDRCXPJopCeAkB1f4RLpxNteL8dhnTa9YR7XG8rucMJfKVQivcVuctorBmkyQSxG",
+      "creatorDeltaLamports": 60000000,
+      "clientDeltaLamports": -5000,
+      "escrowDeltaLamports": -60000000,
+      "feeLamports": 5000
+    },
+    {
+      "operation": "completed:approve:1",
+      "signature": "51szCC1hYRf31khY5WGKmLHjdvjfoBxTBLLskYv7FNF9aQr8aLznCqhC3mBQxdR9V7AyqotSyWzAYuDMHgWSwBpS",
+      "creatorDeltaLamports": 90000000,
+      "clientDeltaLamports": -5000,
+      "escrowDeltaLamports": -90000000,
+      "feeLamports": 5000
+    },
+    {
+      "operation": "completed:approve:2",
+      "signature": "xsSRfaU7aC1WZwWemv4XP4f3bffQ27HeT6c2TRiBTUa7jwX3otyM1QRdvjNKAXJe6LqckHyQhRoudmdTC6rGX3M",
+      "creatorDeltaLamports": 180000000,
+      "clientDeltaLamports": -5000,
+      "escrowDeltaLamports": -180000000,
+      "feeLamports": 5000
+    },
+    {
+      "operation": "resolved:refund",
+      "signature": "ithzp5dFpi1z3wvgCR7gti1ZkbvpV1GJVe4oKfp7c5mPCPRCADV214pFjqGBV18KYYMKxfGmxAif1h3wm8ucxF6",
+      "creatorDeltaLamports": 30000000,
+      "clientDeltaLamports": 240000000,
+      "escrowDeltaLamports": -270000000,
+      "feeLamports": 5000
+    }
+  ]
+}

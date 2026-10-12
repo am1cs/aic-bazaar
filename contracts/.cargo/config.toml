@@ -1,0 +1,4 @@
+[resolver]
+# Agave 2.3.0's SBF platform tools bundle Rust 1.84. Resolve compatible
+# dependency versions even when a newer host Cargo generates Cargo.lock.
+incompatible-rust-versions = "fallback"
