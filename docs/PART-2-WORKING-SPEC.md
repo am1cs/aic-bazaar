@@ -1,8 +1,8 @@
 # AIC Bazaar — рабочее ТЗ части 2
 
-Версия: 1.0. Дата подготовки: 13 октября 2026 года.
+Версия: 1.1. Дата подготовки и обновления: 13 октября 2026 года.
 
-**Статус: ТЗ подготовлено; реализация приложения по этому документу ещё не начата.**
+**Статус: frontend реализован; локальные проверки и визуальная проверка прошли. Пользователь выбрал локальный запуск. Подписание через Phantom, два UX-прогона и запись видео ещё не выполнены.**
 
 Владелец части 2: @destinesia7187. Исполнитель: Codex совместно с владельцем.
 Рабочая ветка: `codex/part-2-web`.
@@ -298,6 +298,8 @@ URL: literal lowercase `https://`, валидный hostname; без spaces, con
 
 ## 17. Vercel и воспроизводимая сборка
 
+Уточнение пользователя от 13 октября: **пока оставить приложение локально**. Vercel publication сейчас не выполнять; конфигурацию сборки сохранить для будущей публикации. Проверка локального production build не означает проверку хостинга Vercel.
+
 Публикуется статический frontend. GitHub checkout должен содержать `web/`, `sdk/`, `shared/` и нужную публичную конфигурацию. Root Directory Vercel — web; подтвердить настройку включения исходников вне Root Directory и разрешение file dependency.
 
 - Dependency install/build команды выбрать и записать после реальной проверки полного layout; не считать обычный npm ci в web достаточным, пока зависимости sibling SDK не подтверждены.
@@ -386,18 +388,18 @@ P0: ложный платёжный успех, неправильный пол�
 
 ## 21. Критерии готовности и evidence handoff
 
-- [ ] UI на английском, четыре экрана и mobile layout.
-- [ ] Read-only просмотр без wallet; роли и wallet switch проверены.
-- [ ] Реальный SDK принят через согласованную передачу; версия записана.
-- [ ] Реальный Devnet deployment подтверждён; Program ID/IDL/config соответствуют.
+- [x] UI на английском, четыре экрана и mobile layout; браузерная проверка 360/768/1440 px.
+- [x] Read-only просмотр без wallet — Devnet; роли и wallet switch — controlled UI tests. Human Phantom acceptance остаётся отдельно.
+- [x] Реальный SDK принят через ветку части 1; версия `a3502ca` записана.
+- [x] Реальный Devnet deployment подтверждён read-only SDK checks; Program ID/IDL/config соответствуют.
 - [ ] Completed и все три dispute outcomes проверены настоящими операциями.
-- [ ] Точные суммы, rent/fees и bond display проверены.
-- [ ] Stale/revision/hash, double click и async races проверены.
-- [ ] Cancelled/rejected/failed/unknown/confirmed-but-unreadable различаются.
-- [ ] Recovery ограничения раскрыты; известные P0/P1 исправлены или честно блокируют готовность.
-- [ ] Typecheck/tests/production build прошли с записанными командами.
+- [x] Точные суммы, rent/fees и bond display проверены: BigInt tests + реальные read-only demo accounts.
+- [x] Stale/revision/hash, double click и async races проверены controlled tests.
+- [x] Cancelled/rejected/failed/unknown/confirmed-but-unreadable различаются — controlled SDK/RPC boundary tests.
+- [x] Recovery ограничения раскрыты; обнаруженные frontend races и риск повторного create исправлены. Реальные wallet flows ещё не приняты.
+- [x] Typecheck, 232 controlled tests, 3 Devnet read-only checks и production build прошли; clean checkout `05cb977` собрался после `npm ci`.
 - [ ] Vercel direct routes/reload/view без wallet проверены.
-- [ ] Fixtures исключены из production transaction path; секретов нет.
+- [x] Fixtures исключены из production transaction path; в web исходниках/config только публичные данные.
 - [ ] Два фактических UX-прогона записаны.
 - [ ] Product demo ≤3 минут, реальный и доступный.
 - [ ] PR/status/docs отражают фактическую готовность и оставшиеся blockers.
@@ -409,5 +411,8 @@ P0: ложный платёжный успех, неправильный пол�
 | Дата | Выполнено | Не выполнено |
 | --- | --- | --- |
 | 2026-10-13 | Прочитаны инструкции/API/SDK; подготовлено рабочее ТЗ | Frontend implementation, dependency install, frontend tests, hosted deployment, UX-прогоны и demo по этому ТЗ не начаты |
+| 2026-10-13 | Интегрирована ветка SDK `a3502ca`; реализованы четыре экрана, Phantom adapter, денежные расчёты, формы, локальный SHA-256, роли, сделки/споры, receipt/recovery; 232 controlled tests и TypeScript прошли | Реальные frontend-операции с подписью Phantom, два человеческих UX-прогона, запись видео; Vercel отложен пользователем |
+| 2026-10-13 | Пользователь передал `design/`: стиль Leonardo — чёрный фон, фиолетовая фирменная типографика, белые pill-кнопки, компактные статусы; дизайн применяется ко всем страницам | Финальная визуальная проверка после редизайна выполняется отдельно |
+| 2026-10-13 | Редизайн проверен в Chrome 360/768/1440 px; production build и clean checkout `05cb977` прошли; реальные completed/refund accounts и три точных asset hashes проверены без wallet; исправлены subtitle/link inheritance и scroll при переходе из галереи | Phantom signatures через этот frontend, два человеческих UX-прогона, запись demo; Vercel по решению пользователя не публикуется |
 
 При реализации обновлять журнал проверенными checkpoint results. Наличие этого документа не является evidence работающих транзакций.
