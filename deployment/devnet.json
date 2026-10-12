@@ -1,0 +1,14 @@
+{
+  "status": "not_deployed",
+  "cluster": "devnet",
+  "rpcUrl": "https://api.devnet.solana.com",
+  "programId": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+  "arbiterAddress": "EJjQVY91fvucyNDDFKH6C8sX8keKA1z7ZXKC7F5h1ski",
+  "demoDeals": {
+    "completed": null,
+    "resolved": null
+  },
+  "verifiedCommit": null,
+  "deployedAt": null,
+  "note": "Reserved public addresses only. Never treat this manifest as proof of deployment until status is deployed and the program account is executable."
+}

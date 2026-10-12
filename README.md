@@ -1,8 +1,9 @@
 # AIC Bazaar
 
 Milestone escrow for businesses commissioning AI content from human creators.
-Solana Devnet only. This repository starts as a collaboration scaffold: no program
-has been built, deployed, audited, or funded yet.
+Solana Devnet MVP. Anchor program, TypeScript SDK, and test suites are implemented.
+Deployment and on-chain verification progress are recorded in
+[part 1 status](docs/status/part-1.md); an address alone is not proof of deployment.
 
 ## Start here
 
@@ -35,3 +36,34 @@ after the initial scaffold.
 
 The project is not submitted to a hackathon merely by creating this repository.
 Submission, access to videos, and completed team profiles must be verified separately.
+
+## Part 1 checks
+
+The contract and TypeScript client use Anchor 0.32.1, web3.js 1.98.4, and Agave
+2.3.0. Node.js 22 or newer is suitable for the TypeScript checks.
+
+```sh
+cd sdk
+npm ci
+npm run typecheck
+npm test
+```
+
+With Rust installed:
+
+```sh
+cd contracts
+cargo test --workspace --lib --locked
+```
+
+See [technical documentation](docs/technical.md) for the actual integration-test
+command and verified evidence, and [SDK documentation](sdk/README.md) for frontend
+integration. The generated IDL is in contracts/idl and bundled in sdk/src/idl.json.
+
+## Trust and limitations
+
+The named human arbiter can award remaining funds according to the three agreed
+outcomes; there is no independent arbitration network. The deployment owner holds
+the program upgrade authority and can change program behavior. There is no
+mainnet deployment or external audit. Files remain in external storage; a stored
+SHA-256 fingerprint does not prove authorship, quality, or legal IP transfer.
