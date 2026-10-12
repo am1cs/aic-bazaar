@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { createBazaarClient, type TransactionWallet } from '../sdk/src/index';
@@ -33,13 +34,23 @@ const output = path.join(root, 'deployment/demo-transactions.json');
 if (fs.existsSync(output)) throw new Error('Demo receipt file already exists. Inspect its deals before creating more.');
 const commit = process.env.AIC_ASSET_COMMIT;
 if (!commit || !/^[0-9a-f]{40}$/.test(commit)) throw new Error('Set AIC_ASSET_COMMIT to the published commit containing the demo assets.');
+execFileSync('git', ['cat-file', '-e', `${commit}^{commit}`], { cwd: root, stdio: 'ignore' });
+for (const file of ['concept.svg', 'draft.mp4', 'final.mp4']) {
+  const response = await fetch(`https://raw.githubusercontent.com/am1cs/aic-bazaar/${commit}/deployment/demo-assets/${file}`);
+  if (!response.ok) throw new Error(`Published asset ${file} is unavailable (HTTP ${response.status}). No deal created.`);
+  const remoteHash = createHash('sha256').update(new Uint8Array(await response.arrayBuffer())).digest('hex');
+  const localHash = createHash('sha256').update(fs.readFileSync(path.join(root, 'deployment/demo-assets', file))).digest('hex');
+  if (remoteHash !== localHash) throw new Error(`Published asset ${file} does not match the local file. No deal created.`);
+}
 const records: Array<Record<string, unknown>> = [];
 const deals: Record<string, string> = {};
 const persist = () => fs.writeFileSync(output, JSON.stringify({ cluster: 'devnet', programId: programId.toBase58(), assetCommit: commit, deals, transactions: records }, null, 2) + '\n');
-const receipt = (operation: string, result: Awaited<ReturnType<typeof clientSdk.createDeal>>) => {
+const receipt = async (operation: string, result: Awaited<ReturnType<typeof clientSdk.createDeal>>) => {
   records.push({ operation, signature: result.signature, dealAddress: result.dealAddress });
   persist();
   if (!result.deal) throw new Error(`Confirmed ${operation}, but refresh failed. Receipt saved; inspect before retrying.`);
+  // Pace the public Devnet RPC; never automatically resubmit a signed operation.
+  await new Promise(resolve => setTimeout(resolve, 3000));
   return result.deal;
 };
 
@@ -69,21 +80,21 @@ const makeDeal = async (name: string) => {
     budgetLamports: '300000000', deadlines: [now + 86400, now + 172800, now + 259200],
   });
   deals[name] = result.dealAddress;
-  receipt(`${name}:create`, result);
-  receipt(`${name}:accept`, await creatorSdk.acceptDeal(result.dealAddress));
+  await receipt(`${name}:create`, result);
+  await receipt(`${name}:accept`, await creatorSdk.acceptDeal(result.dealAddress));
   return result.dealAddress;
 };
 const completed = await makeDeal('completed');
 for (const index of [0, 1, 2] as const) {
-  receipt(`completed:submit:${index}`, await creatorSdk.submitMilestone({ address: completed, index, expectedRevision: 0, ...materials[index] }));
-  receipt(`completed:approve:${index}`, await clientSdk.approveMilestone({ address: completed, index, expectedRevision: 1, expectedHash: materials[index].sha256 }));
+  await receipt(`completed:submit:${index}`, await creatorSdk.submitMilestone({ address: completed, index, expectedRevision: 0, ...materials[index] }));
+  await receipt(`completed:approve:${index}`, await clientSdk.approveMilestone({ address: completed, index, expectedRevision: 1, expectedHash: materials[index].sha256 }));
 }
 const resolved = await makeDeal('resolved');
-receipt('resolved:submit:0', await creatorSdk.submitMilestone({ address: resolved, index: 0, expectedRevision: 0, ...materials[0] }));
-receipt('resolved:approve:0', await clientSdk.approveMilestone({ address: resolved, index: 0, expectedRevision: 1, expectedHash: materials[0].sha256 }));
-receipt('resolved:submit:1', await creatorSdk.submitMilestone({ address: resolved, index: 1, expectedRevision: 0, ...materials[1] }));
-receipt('resolved:dispute', await clientSdk.openDispute(resolved, 'Demo scenario: campaign paused after concept approval; parties disagree about proceeding with the draft.'));
-receipt('resolved:refund', await arbiterSdk.resolveDispute(resolved, 'refund', 'Demo settlement: retain paid concept, refund remaining 0.24 SOL to client, and return 0.03 SOL bond; no creator breach.'));
+await receipt('resolved:submit:0', await creatorSdk.submitMilestone({ address: resolved, index: 0, expectedRevision: 0, ...materials[0] }));
+await receipt('resolved:approve:0', await clientSdk.approveMilestone({ address: resolved, index: 0, expectedRevision: 1, expectedHash: materials[0].sha256 }));
+await receipt('resolved:submit:1', await creatorSdk.submitMilestone({ address: resolved, index: 1, expectedRevision: 0, ...materials[1] }));
+await receipt('resolved:dispute', await clientSdk.openDispute(resolved, 'Demo scenario: campaign paused after concept approval; parties disagree about proceeding with the draft.'));
+await receipt('resolved:refund', await arbiterSdk.resolveDispute(resolved, 'refund', 'Demo settlement: retain paid concept, refund remaining 0.24 SOL to client, and return 0.03 SOL bond; no creator breach.'));
 const [completedDeal, resolvedDeal] = await Promise.all([clientSdk.getDeal(completed), clientSdk.getDeal(resolved)]);
 if (completedDeal.status !== 'completed' || resolvedDeal.status !== 'resolved') throw new Error('Unexpected terminal demo states.');
 for (const deal of [completedDeal, resolvedDeal]) {

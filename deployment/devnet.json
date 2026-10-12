@@ -1,14 +1,20 @@
 {
-  "status": "not_deployed",
+  "status": "deployed",
   "cluster": "devnet",
   "rpcUrl": "https://api.devnet.solana.com",
   "programId": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+  "programDataAddress": "5FbWbqZRRUfJVqvKjmprkZN642Lj7rMyJPW4iFU2iYCg",
+  "upgradeAuthority": "wg7zLEvr1EYuhimLDMTYGnqbMwDoeaKd8CXcZteCPup",
+  "deploymentSignature": "2TX42n6HWZ2qK4JHZ5qBmRc71XBpqxBdcwTxXxQpDEXeass3SpVXzapwPobHm7mzmF34nJey1Kh6DE5xousCLzEb",
+  "lastDeploySlot": 510390192,
+  "binaryBytes": 291728,
+  "binarySha256": "897ab1b6352186e7d4b36982eb726cd24a529a2b33726b2ec9b4ec8fc437769f",
   "arbiterAddress": "EJjQVY91fvucyNDDFKH6C8sX8keKA1z7ZXKC7F5h1ski",
   "demoDeals": {
-    "completed": null,
-    "resolved": null
+    "completed": "E6z3ZUSy9up26ttcYUDXUBWhGGpbw1y6trfHN4W61C8d",
+    "resolved": "98jXr37FrE4wYP7ZMzyXY9ELsDhhtdTsqz4wHnsyUUMN"
   },
-  "verifiedCommit": null,
-  "deployedAt": null,
-  "note": "Reserved public addresses only. Never treat this manifest as proof of deployment until status is deployed and the program account is executable."
+  "verifiedCommit": "80c1d8e02a483e42e8e3a2b37cdf4788c06edc5f",
+  "deployedAt": "2026-10-12T20:52:15.000Z",
+  "note": "Executable Devnet deployment and both terminal demo deals verified. On-chain binary matches the locally tested artifact. Synthetic fixtures are demonstration data, not customer traction."
 }

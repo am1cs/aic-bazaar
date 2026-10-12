@@ -1,0 +1,51 @@
+{
+  "cluster": "devnet",
+  "programId": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+  "assetCommit": "80c1d8e44629ecdd25de881810cd0585fe823839",
+  "deals": {
+    "completed": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+  },
+  "transactions": [
+    {
+      "operation": "fund_demo_wallets",
+      "signature": "4eQYmvNX2oYbopHaYz4zwGvxTDAzNJSsu3ut1isccuuH8yXAfxi6xF12Rag5LnbiEx8Xcbv2GWF2GbVeF43PGC8v"
+    },
+    {
+      "operation": "completed:create",
+      "signature": "2eGeprXrLAnMNTmqc9m51CjDUAuvHLdfHZaYSuU7T7HWWsEFfchfktQfBqgj34MKfA3QHrYnkgnoZCTMYmiUvwQi",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "completed:accept",
+      "signature": "4L5uQDPCP3LVYdwQVaNmYjrqsZUhMjZgGCkSUQ8kLXSRGFahknecx6pkyBXBcSLcdzzpb8VRjKpcpGBP1wUGvthn",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "completed:submit:0",
+      "signature": "3quLbdV2dQUoDwbTvtGxtWAXDD9KHAVvZo1AsQgGFd9Kn1zoE2CJSacqKt6bE8y9DWgW876rNdKy1WwLBj9VF511",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "completed:approve:0",
+      "signature": "2eTvVHk7UG3iaMPvEicq1aL39WqXATF9m85hVtCnzsk4wuTXqDh7273KBtXwf12JbVrQ1P7fDmn8fu81FRiKqoQY",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "completed:submit:1",
+      "signature": "2bFndsrYZ7jHsg2WXW8687ZzCQhEKTWnrZNPPRAf49dBxMss4AQTJtxWs2DUr4GUEVooDRUJHmLY5d4nhGPPqU4i",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "retire:dispute",
+      "signature": "2JFVEcGVhSDcrdy7brvUZaTgFbfY7tgvqjJEyB2xC6c6cGB5pSGgCPjmjyuwE61r8kvgkgmWJc2xu2HJPXPebffs",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    },
+    {
+      "operation": "retire:refund",
+      "signature": "6SNTXqTaDBScS6bZVPNa4UuKzPP35KCLQ959Av7RhvwWB9EP7K2NFnsxNnhATPHC4XrGFmQXjN3yywRemxcHhNF",
+      "dealAddress": "HirVhVNmVesjHAunX5KVe5D7btnavdCi9Vsy68R2oh9b"
+    }
+  ],
+  "retired": true,
+  "note": "Retired setup run: invalid asset commit reference. Excluded from final demonstration deals. Remaining budget and bond returned."
+}

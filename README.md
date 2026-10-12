@@ -5,6 +5,10 @@ Solana Devnet MVP. Anchor program, TypeScript SDK, and test suites are implement
 Deployment and on-chain verification progress are recorded in
 [part 1 status](docs/status/part-1.md); an address alone is not proof of deployment.
 
+**Part 1 verified:** real Devnet program, completed and refunded demonstration
+orders, genuine IDL, SDK and reproducible tests. The web interface is owned by
+part 2. Public configuration and receipts are in [deployment/devnet.json](deployment/devnet.json).
+
 ## Start here
 
 - Read [AGENTS.md](AGENTS.md) before changing files.

@@ -25,6 +25,12 @@ stores a private key. All amounts crossing the public API are integer strings.
 `calculateAmounts(budgetLamports)` returns exact BigInt budget, bond, and stage
 amounts for display; serialize the BigInts explicitly when needed.
 
+Memoize the client for a stable connection/wallet/program combination; recreating
+it on every React render repeats readiness requests. Use manual refresh or a
+reasonable polling interval on the public RPC. If the app and SDK resolve separate
+web3.js copies, configure Vite `resolve.dedupe: ['@solana/web3.js', 'bn.js', 'buffer']`
+and keep the app on the SDK's web3.js version.
+
 ## Network and deployment
 
 The SDK verifies the RPC genesis hash and executable program account. A
