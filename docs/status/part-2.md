@@ -36,7 +36,7 @@ Local preview: http://127.0.0.1:5173/; new deal: http://127.0.0.1:5173/create wh
 Public browser checks: Home, direct completed-deal and resolved-dispute routes loaded over HTTPS and fetched their real Devnet state; direct /create loaded. Production assets contain no Vite dev client, sourcemaps or key files. No human signing has been performed. Localhost drafts/receipts do not transfer to the public hostname; keep one URL/tab for each pending operation.
 SDK integration: actual part 1 source and deployed Devnet program.
 Program ID: 8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX.
-PR: not opened; local implementation is committed.
+GitHub handoff — 2026-10-13: the user requested committing and pushing all project work to am1cs/aic-bazaar on codex/part-2-web. This checkpoint includes the frontend, SDK integration, working spec, validation notes and four supplied design-reference files. Local test-wallet private keys remain outside Git. Remote push verification is recorded in the chat. PR: not opened.
 Demo walkthrough: docs/demo.md. Human acceptance plan and agent QA: docs/usability.md.
 
 ## Remaining acceptance
