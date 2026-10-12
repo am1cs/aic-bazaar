@@ -3,6 +3,7 @@ name = "aic-bazaar"
 version = "0.1.0"
 description = "AIC Bazaar milestone escrow, Devnet MVP"
 edition = "2021"
+rust-version = "1.84"
 
 [lib]
 crate-type = ["cdylib", "lib"]

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash, randomBytes } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 import anchor from '@coral-xyz/anchor';
@@ -91,6 +91,10 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
   const readDeal = (address: PublicKey): Promise<DealAccount> => dealAccounts.deal.fetch(address);
   const balance = async (address: PublicKey): Promise<bigint> => BigInt(await connection.getBalance(address));
   const tracked = Object.values(actors).map((actor) => actor.publicKey);
+  const programTransactions: { instruction: string; signature: string; dealAddress: string }[] = [];
+  let rejectedProgramAttempts = 0;
+  let maxCreateBytes = 0;
+  let maxSubmitBytes = 0;
   let transactionNonce = 0;
   const send = async (method: string, args: unknown[], accounts: Accounts, signer: Keypair): Promise<string> => {
     const keys = [...tracked, accounts.deal!];
@@ -100,6 +104,7 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
       // for a second execution when checking double-payment and terminal guards.
       .preInstructions([ComputeBudgetProgram.setComputeUnitPrice({ microLamports: ++transactionNonce })])
       .signers([signer]).rpc();
+    programTransactions.push({ instruction: method, signature, dealAddress: accounts.deal!.toBase58() });
     const after = await Promise.all(keys.map(balance));
     const sum = (values: bigint[]): bigint => values.reduce((total, value) => total + value, 0n);
     assert.equal(sum(after), sum(before), `${method} did not conserve participant plus escrow lamports`);
@@ -129,6 +134,7 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
         'Negative test failed before reaching the program or due to an unrelated RPC error');
       return true;
     });
+    rejectedProgramAttempts++;
     assert.deepEqual(await Promise.all(keys.map(balance)), before, 'A rejected action changed participant/escrow balances');
     if (address) assert.equal((await connection.getAccountInfo(address))?.data.toString('base64'), dataBefore,
       'A rejected action changed stored deal state');
@@ -413,8 +419,10 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
     maxCreate.feePayer = payer.publicKey;
     maxCreate.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
     maxCreate.sign(payer, actors.client);
-    assert(maxCreate.serialize().length <= 1232, `Max create size ${maxCreate.serialize().length} exceeds Solana packet limit`);
-    await provider.sendAndConfirm(maxCreate, [actors.client]);
+    maxCreateBytes = maxCreate.serialize().length;
+    assert(maxCreateBytes <= 1232, `Max create size ${maxCreateBytes} exceeds Solana packet limit`);
+    const createSignature = await provider.sendAndConfirm(maxCreate, [actors.client]);
+    programTransactions.push({ instruction: 'createDeal', signature: createSignature, dealAddress: address.toBase58() });
     const balancesAfterCreate = await Promise.all([...tracked, address].map(balance));
     assert.equal(balancesAfterCreate.reduce((a, b) => a + b, 0n), balancesBeforeCreate.reduce((a, b) => a + b, 0n));
     await assertEscrow(address);
@@ -424,9 +432,11 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
     maxSubmit.feePayer = payer.publicKey;
     maxSubmit.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
     maxSubmit.sign(payer, actors.creator);
-    assert(maxSubmit.serialize().length <= 1232);
+    maxSubmitBytes = maxSubmit.serialize().length;
+    assert(maxSubmitBytes <= 1232);
     const balancesBeforeSubmit = await Promise.all([...tracked, address].map(balance));
-    await provider.sendAndConfirm(maxSubmit, [actors.creator]);
+    const submitSignature = await provider.sendAndConfirm(maxSubmit, [actors.creator]);
+    programTransactions.push({ instruction: 'submitMilestone', signature: submitSignature, dealAddress: address.toBase58() });
     assert.deepEqual(await Promise.all([...tracked, address].map(balance)), balancesBeforeSubmit);
     await assertEscrow(address);
     await send('openDispute', ['d'.repeat(200)], actorAccounts('party', address, actors.creator), actors.creator);
@@ -440,4 +450,18 @@ test('compiled AIC Bazaar program enforces escrow and role rules', { timeout: 60
     assert.equal(state.milestones[0]!.url.length, 200);
     await assertEscrow(address);
   });
+
+  const report = {
+    executedAtUTC: new Date().toISOString(),
+    network: local ? 'local-validator' : 'devnet',
+    programId: programId.toBase58(),
+    confirmedProgramTransactions: programTransactions.length,
+    rejectedProgramAttempts,
+    maximumPayloadPacketBytes: { create: maxCreateBytes, submit: maxSubmitBytes, limit: 1232 },
+    transactions: programTransactions,
+  };
+  const reportPath = path.resolve(process.env.AIC_TEST_REPORT_PATH ?? 'target/test-reports/integration.json');
+  await mkdir(path.dirname(reportPath), { recursive: true });
+  await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n');
+  t.diagnostic(JSON.stringify({ ...report, transactions: undefined }));
 });

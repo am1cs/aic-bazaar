@@ -67,3 +67,34 @@ account normalization, wire encoding, wallet rejection, failed simulation,
 signature recovery, and confirmed-but-unreadable receipts. RPC unit tests use
 explicit mocks and do not constitute on-chain escrow verification. Program
 integration tests and Devnet evidence are recorded separately by part 1.
+
+An additional actual-SDK integration suite is skipped by default. It requires
+the compiled program deployed at `http://127.0.0.1:8899` and an ignored local
+test payer file with at least 0.7 test SOL. Role wallets are ephemeral; their
+private keys are never written or printed. This suite signs real transactions
+and verifies all three stage payouts, cancellation, all dispute outcomes,
+normalized account reads, and lamport conservation including actual fees.
+
+macOS/Linux, from `sdk/`:
+
+```sh
+AIC_RUN_SDK_INTEGRATION=1 AIC_TEST_PAYER=../.local/keys/test-payer.json npm run test:chain
+```
+
+Windows PowerShell, from `sdk/`:
+
+```powershell
+$env:AIC_RUN_SDK_INTEGRATION = '1'
+$env:AIC_TEST_PAYER = '../.local/keys/test-payer.json'
+npm run test:chain
+```
+
+`test:chain` does not enable itself: absent the explicit flag, the chain tests
+are reported as skipped. Public transaction signatures in its output are local
+validator evidence, not Devnet Explorer receipts.
+
+Verified on 2026-10-13 against the compiled executable program at the local
+validator: **5/5 actual-SDK integration scenarios passed**, alongside 53/53
+unit tests and a passing TypeScript check. The local run exercised every public
+client method with real signatures and confirmed account reads; no RPC mocks
+were used in `chain.test.ts`. Devnet deployment evidence remains separate.
