@@ -11,17 +11,20 @@ Branch: codex/part-2-web.
 - Phantom adapter, public wallet-free reads, participant permissions, exact BigInt amounts, local SHA-256, revision guards, explicit reviews and three settlement calculations implemented.
 - Operation controller prevents overlapping mutations. Confirmed, failed and unknown receipts are distinct; unknown outcomes cannot be dismissed or automatically repeated. Creation reviews are consumed before signing and cannot reactivate after recovered confirmation.
 - TypeScript passed, including SDK source, verification checks and Vite configurations.
-- 232 controlled frontend tests passed in 10 files: validation, money, permissions, hashing, async route/wallet/stage changes, operation recovery, creation, receipt feedback and accessibility.
+- 242 controlled frontend tests passed in 11 files: validation, money, permissions, hashing, async route/wallet/stage changes, operation recovery, creation, receipt feedback, accessibility and motion safeguards.
 - Three actual read-only Devnet checks passed: completed deal, resolved/refund deal, and exact public asset hashes against completed on-chain submissions.
-- Production build passed: 297 modules, JavaScript 976.43 kB / 293.24 kB gzip.
+- Latest production build passed: 303 modules, JavaScript 984.37 kB / 295.56 kB gzip, CSS 66.27 kB / 14.48 kB gzip.
 - Clean clone of implementation commit 05cb977: `npm ci` and `npm run build` passed without installing or editing sibling SDK dependencies; Git working tree stayed clean. All three demo hashes remained exact after checkout on Windows.
-- Chrome browser QA: 360 px Home/Create/completed deal, 768 px Home/Create, and 1440 px Home/resolved dispute. No horizontal page overflow. Both demo videos load as 15-second media and remain paused. Invalid deal addresses show accessible feedback. Direct dispute reload works without a wallet. Navigation from the lower gallery opens a deal at the top.
+- Baseline Chrome browser QA: 360 px Home/Create/completed deal, 768 px Home/Create, and 1440 px Home/resolved dispute. No horizontal page overflow. Invalid deal addresses show accessible feedback. Direct dispute reload works without a wallet. Navigation from the lower gallery opens a deal at the top.
+- Latest in-app browser QA: 360, 835 and 1440 px Home; no horizontal overflow. Main copy is 16 px desktop, 15.2 px tablet and 14.4 px mobile; the network note is 12 px. Sticky navigation has real destinations, mobile Tab enters the menu and Escape restores its trigger. Hash navigation focuses its heading below the sticky header (104 px heading offset against an 89 px header on desktop).
+- Actual scrolling changes room depth/rotation: progress 0.793 at scrollY 633 px produced the expected 3D transform while the room remained visible. Staggered cards respond to viewport progress. Motion off resets the room transform and stops the camera, with copy fully visible. Initial/change reduced motion, stale callbacks and cleanup have controlled coverage; changing the OS setting in-browser remains unrun.
+- GLOW gallery contains three loaded violet static covers, zero video elements and zero download links. Covers are separate previews; original on-chain delivery assets and hashes are unchanged.
 - CSS strict parsing passed with zero warnings; financial/body metadata and colored status labels meet contrast checks. Copy feedback and Back-focus behavior have controlled component coverage.
 - Public demo SVG bytes are protected against Windows newline conversion.
 
 ## Handoff
 
-Frontend implementation commit: 05cb977.
+Frontend implementation baseline: 05cb977; the latest local visual checkpoint is recorded in the branch history.
 Public site: not deployed; user explicitly chose local-only work.
 Local preview: http://127.0.0.1:5173/ while the development server runs.
 SDK integration: actual part 1 source and deployed Devnet program.

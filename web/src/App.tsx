@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from 'react';
-import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Header } from './Header';
 import Home from './Home';
 import Create from './Create';
 import DealPage from './DealPage';
@@ -8,17 +8,26 @@ import OperationPanel from './OperationPanel';
 import { useOperation } from './transactions/useOperation';
 import { External } from './components';
 export default function App() {
-  const { pathname } = useLocation();
-  useLayoutEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, [pathname]);
+  const { pathname, hash, key } = useLocation();
+  useLayoutEffect(() => {
+    if (hash) {
+      let id = hash.slice(1);
+      try { id = decodeURIComponent(id); } catch { /* Malformed hashes still fall back safely. */ }
+      const target = document.getElementById(id);
+      if (target) {
+        if (!target.hasAttribute('tabindex')) target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'start', behavior: 'instant' });
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname, hash, key]);
   const {snapshot} = useOperation();
   useEffect(()=>{ if(!snapshot.busy && snapshot.attempt?.state !== 'unknown') return; const warn=(e:BeforeUnloadEvent)=>{e.preventDefault();e.returnValue='';}; window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn); },[snapshot.busy,snapshot.attempt?.state]);
   return <div className="app-shell">
     <a className="skip-link" href="#main-content">Skip to content</a>
-    <header className="site-header">
-      <Link className="brand" to="/"><img className="brand-mark" src="/brand-mark.svg" alt=""/><span className="brand-name">AIC<span> Bazaar</span></span></Link>
-      <nav className="nav" aria-label="Main navigation"><NavLink to="/" end>Overview</NavLink><NavLink to="/create">Create deal</NavLink></nav>
-      <div className="wallet-area"><span className="network-pill">Devnet · Test SOL</span><WalletMultiButton/></div>
-    </header>
+    <Header/>
     <main className="page-container" id="main-content" tabIndex={-1}>
       <OperationPanel/>
       <Routes>

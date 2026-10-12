@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PublicKey } from '@solana/web3.js';
 import { deployment } from './config';
 import { Alert } from './components';
+import MotionScene from './MotionScene';
+import CinematicHero from './CinematicHero';
 
 export default function Home() {
   const [address, setAddress] = useState('');
@@ -14,32 +16,8 @@ export default function Home() {
     catch { setError('Enter a valid Solana deal address.'); }
   }
 
-  return <>
-    <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-wordmark" aria-hidden="true">AIC BAZAAR<span>✳</span></div>
-      <div className="hero-copy">
-        <span className="eyebrow home-kicker"><span aria-hidden="true">✳</span> THE CREATOR × CLIENT AGREEMENT</span>
-        <h1 className="hero-title" id="hero-title">Great work.<br/><em>Paid in progress.</em></h1>
-        <p className="hero-description">A shared brief. Three milestones. Funds reserved from the start. A clearer way for businesses and AI creators to work together.</p>
-        <div className="hero-actions">
-          <Link className="button primary" to="/create">Start a deal <span aria-hidden="true">↗</span></Link>
-          <Link className="button secondary" to={`/deal/${deployment.demoDeals.completed}`}>Explore the live demo <span aria-hidden="true">→</span></Link>
-        </div>
-        <p className="section-note">Solana Devnet · Test SOL only · Human creators</p>
-      </div>
-      <div className="hero-visual home-workbench" role="img" aria-label="Illustration of a creative project moving from concept to draft to final, with payments of twenty, thirty and fifty percent. This is a visual illustration, not a live deal.">
-        <div className="workbench-top"><span>THE CREATIVE WORKSPACE</span><span className="badge muted">ILLUSTRATION</span></div>
-        <div className="brief-preview">
-          <div className="preview-heading"><strong>Make something<br/>worth watching.</strong><span>15 SEC<br/>9:16</span></div>
-          <div className="preview-grid" aria-hidden="true">
-            <div className="preview-shot shot-1"><img src="/frames/frame-01.svg" alt=""/><span>01 / THE IDEA</span></div>
-            <div className="preview-shot shot-2"><img src="/frames/frame-02.svg" alt=""/><span>02 / THE CUT</span></div>
-            <div className="preview-shot shot-3"><img src="/frames/frame-03.svg" alt=""/><span>03 / THE DELIVERY</span></div>
-          </div>
-        </div>
-        <div className="deliverable-card"><div className="deliverable-title"><span>One brief. A clear path.</span><span aria-hidden="true">↗</span></div><div className="deliverable-stages"><span className="stage-chip"><b>Concept</b><span>20%</span></span><span className="stage-chip"><b>Draft</b><span>30%</span></span><span className="stage-chip"><b>Final</b><span>50%*</span></span></div><p className="field-help">*Final receives the remaining budget.</p></div>
-      </div>
-    </section>
+  return <MotionScene>
+    <CinematicHero/>
 
     <div className="home-protocol" aria-label="Deal essentials">
       <div className="protocol-item"><span>01 / CLIENT</span><strong>Full budget reserved</strong></div>
@@ -62,12 +40,12 @@ export default function Home() {
       <div className="demo-card demo-project">
         <div className="demo-meta"><div><span className="section-index">GLOW / 15-SECOND AI AD</span><h3>From the first frame<br/>to final delivery.</h3></div><span className="demo-status success">Completed · on-chain</span></div>
         <div className="demo-gallery">
-          <figure className="demo-art"><img src="/demo/concept.svg" alt="GLOW demonstration storyboard with three scenes" loading="lazy"/><figcaption><span>01 / CONCEPT</span><a href="/demo/concept.svg" download>SVG ↓</a></figcaption></figure>
-          <figure className="demo-art"><video src="/demo/draft.mp4" controls preload="metadata" playsInline aria-label="GLOW demonstration draft video"/><figcaption><span>02 / DRAFT</span><a href="/demo/draft.mp4" download>MP4 ↓</a></figcaption></figure>
-          <figure className="demo-art"><video src="/demo/final.mp4" controls preload="metadata" playsInline aria-label="GLOW demonstration final video"/><figcaption><span>03 / FINAL</span><a href="/demo/final.mp4" download>MP4 ↓</a></figcaption></figure>
+          <figure className="demo-art"><img src="/previews/glow-concept.svg" alt="Purple storyboard cover illustration for the GLOW concept" loading="lazy"/><figcaption><span>01 / CONCEPT</span></figcaption></figure>
+          <figure className="demo-art"><img src="/previews/glow-draft.svg" alt="Static storyboard cover illustration for the GLOW draft" loading="lazy"/><figcaption><span>02 / DRAFT</span></figcaption></figure>
+          <figure className="demo-art"><img src="/previews/glow-final.svg" alt="Static storyboard cover illustration for the GLOW final delivery" loading="lazy"/><figcaption><span>03 / FINAL</span></figcaption></figure>
         </div>
         <div className="demo-links"><Link className="button primary" to={`/deal/${deployment.demoDeals.completed}`}>View completed deal <span aria-hidden="true">↗</span></Link><Link className="button secondary" to={`/deal/${deployment.demoDeals.resolved}/dispute`}>Explore a resolved dispute <span aria-hidden="true">↗</span></Link></div>
-        <p className="field-help">Synthetic demonstration orders using test funds, not paying customer activity. These exact files match the hashes recorded in the completed deal.</p>
+        <p className="field-help">Synthetic demonstration order using test funds, not paying customer activity. Static previews are shown here; the public deal contains the submitted material links and SHA-256 fingerprints.</p>
       </div>
     </section>
 
@@ -77,5 +55,5 @@ export default function Home() {
       {error && <div id="open-address-error"><Alert tone="error">{error}</Alert></div>}
       <p className="field-help">Open the link shared by your collaborator, or paste its deal address here.</p>
     </section>
-  </>;
+  </MotionScene>;
 }

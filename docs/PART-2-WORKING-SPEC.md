@@ -397,7 +397,7 @@ P0: ложный платёжный успех, неправильный пол�
 - [x] Stale/revision/hash, double click и async races проверены controlled tests.
 - [x] Cancelled/rejected/failed/unknown/confirmed-but-unreadable различаются — controlled SDK/RPC boundary tests.
 - [x] Recovery ограничения раскрыты; обнаруженные frontend races и риск повторного create исправлены. Реальные wallet flows ещё не приняты.
-- [x] Typecheck, 232 controlled tests, 3 Devnet read-only checks и production build прошли; clean checkout `05cb977` собрался после `npm ci`.
+- [x] Typecheck, 242 controlled tests, 3 Devnet read-only checks и production build прошли; исходный clean checkout `05cb977` собрался после `npm ci`.
 - [ ] Vercel direct routes/reload/view без wallet проверены.
 - [x] Fixtures исключены из production transaction path; в web исходниках/config только публичные данные.
 - [ ] Два фактических UX-прогона записаны.
@@ -414,5 +414,6 @@ P0: ложный платёжный успех, неправильный пол�
 | 2026-10-13 | Интегрирована ветка SDK `a3502ca`; реализованы четыре экрана, Phantom adapter, денежные расчёты, формы, локальный SHA-256, роли, сделки/споры, receipt/recovery; 232 controlled tests и TypeScript прошли | Реальные frontend-операции с подписью Phantom, два человеческих UX-прогона, запись видео; Vercel отложен пользователем |
 | 2026-10-13 | Пользователь передал `design/`: стиль Leonardo — чёрный фон, фиолетовая фирменная типографика, белые pill-кнопки, компактные статусы; дизайн применяется ко всем страницам | Финальная визуальная проверка после редизайна выполняется отдельно |
 | 2026-10-13 | Редизайн проверен в Chrome 360/768/1440 px; production build и clean checkout `05cb977` прошли; реальные completed/refund accounts и три точных asset hashes проверены без wallet; исправлены subtitle/link inheritance и scroll при переходе из галереи | Phantom signatures через этот frontend, два человеческих UX-прогона, запись demo; Vercel по решению пользователя не публикуется |
+| 2026-10-13 | По уточнению пользователя добавлена 3D типографическая сцена в духе Leonardo, закреплённое меню с рабочими dropdown/якорями, более крупный контрастный текст и движение от прокрутки; все три нижних preview фиолетовые, видео/download controls убраны. 242 tests/TypeScript/build прошли; browser QA 360/835/1440 px, Tab/Escape, focus/anchor, Motion pause и реальная scroll-transform проверены | Human Phantom acceptance, два человеческих UX-прогона, запись demo и изменение системного reduced-motion в браузере ещё не выполнены; сайт остаётся локальным |
 
 При реализации обновлять журнал проверенными checkpoint results. Наличие этого документа не является evidence работающих транзакций.

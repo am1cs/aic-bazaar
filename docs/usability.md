@@ -10,12 +10,13 @@ The checklist is a review plan, not a test report. Record the environment, brows
 
 The following checks were actually performed. They do not count as the two required human usability sessions.
 
-- `npm test`: 232 controlled tests in 10 files passed. TypeScript and production build passed.
+- `npm test`: 242 controlled tests in 11 files passed. TypeScript and latest production build passed (303 modules).
 - `npm run verify:devnet`: three actual read-only checks passed, including exact public asset hashes against completed deal submissions.
 - Chrome, local preview: 360 px Home/Create/completed deal, 768 px Home/Create, 1440 px Home/resolved dispute. Page scroll width matched client width; no horizontal overflow.
 - The Create funding action remains disabled without a wallet. Byte counters were checked with multibyte text. Invalid Home deal addresses show an alert and `aria-invalid`.
 - Completed deal displays actual budget 0.30 SOL, zero remaining budget/bond, and paid 0.06 / 0.09 / 0.15 stages. Resolved deal retains paid Concept and records refund of 0.24 SOL plus return of 0.03 SOL bond. Direct dispute reload loads without a wallet.
-- Both public videos load as 15-second files with native controls and no autoplay. Decorative hero content is labeled illustrative.
+- The current landing gallery contains three loaded purple static previews, no video/fullscreen player and no download buttons. Original delivery files remain in the public deal with unchanged hashes.
+- Latest in-app browser visual QA at 360/835/1440 px: larger readable copy, contained typography, no horizontal overflow. Mobile Tab enters the opened navigation; Escape closes it and restores focus. Section links focus their heading below the sticky header. Actual scrolling changes room depth/rotation and card offsets; Motion off stops camera/scroll transforms and leaves content visible.
 - Review focus restoration, copy live feedback, strict external HTTPS links, role switches, hashing races and uncertain receipt recovery are covered by controlled component tests. A full human keyboard walkthrough and system reduced-motion browser check remain unrun.
 - Browser findings fixed: mobile address wrapping, cramped subtitle leading, oversized inherited utility links, clipped decorative lettering and route scroll position after lower-gallery navigation.
 

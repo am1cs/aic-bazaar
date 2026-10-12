@@ -20,7 +20,13 @@ Vercel: Root Directory `web`, Include source files outside Root Directory enable
 
 The current handoff is local-only at the user's request. Vercel publication has not been performed.
 
-The visual system follows the supplied `design/` reference: black canvas, violet brand typography, white pill actions, compact labeled status chips. Accessible text shades replace reference combinations with insufficient contrast. Fonts use local system fallbacks because the reference supplies font names, not licensed font files. Decorative frames are original SVG illustrations; the GLOW gallery uses the exact public demo files and preserves their recorded hashes.
+The visual system follows the supplied `design/` reference and the user's Leonardo.ai direction: a black CSS 3D typography room, violet brand planes, centered white copy and pill actions. Accessible text shades replace reference combinations with insufficient contrast. Fonts use local system fallbacks because the reference supplies font names, not licensed font files.
+
+Motion is a landing-page enhancement: finite introductory reveals, scroll-driven room depth and staggered content movement, ambient room motion while visible, and fine-pointer depth. Scroll work uses one coalesced animation frame and stable layout measurements. The visible Motion on/off control pauses decoration, and native reduced-motion preferences force a static readable view. Unsupported observers fail open. Financial state and wallet operations remain separate from decorative motion.
+
+The GLOW gallery displays three violet static illustrated previews with no video/fullscreen or download controls. These covers are separate from the original delivery files, which remain available through the public deal and preserve their recorded SHA-256 hashes.
+
+The sticky header provides real Create/Explore links, section navigation, documentation and the wallet control. Dropdowns and the mobile disclosure support keyboard navigation and Escape. Anchor navigation places focus on the destination below the sticky header.
 
 No mutations run automatically. Read-only `getDeal()` works without Phantom. Connect a participant wallet for an explicit operation. Unknown transaction outcomes lock further mutations; confirm the saved signature before repeating anything. A confirmed receipt with an account-refresh error offers refresh, not another payment.
 
