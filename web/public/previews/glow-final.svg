@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="760" viewBox="0 0 1080 760" role="img" aria-labelledby="final-title final-description">
+  <title id="final-title">GLOW · Final preview</title>
+  <desc id="final-description">A static illustrated cover with three finished violet GLOW bottle compositions and a polished create-your-moment advertising line. This fictional artwork previews the final; it is not the original delivery file recorded on-chain.</desc>
+  <defs>
+    <clipPath id="final-frame"><rect width="328" height="580" rx="20"/></clipPath>
+    <linearGradient id="final-label" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7564d4"/>
+      <stop offset=".52" stop-color="#6e60ee"/>
+      <stop offset="1" stop-color="#5141ad"/>
+    </linearGradient>
+    <radialGradient id="final-halo">
+      <stop stop-color="#9a87ff" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#3b2e64" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="final-panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#302048"/>
+      <stop offset="1" stop-color="#241b35"/>
+    </linearGradient>
+    <g id="final-bottle">
+      <ellipse cx="164" cy="446" rx="82" ry="13" fill="#0d0b13" opacity=".7"/>
+      <rect x="96" y="158" width="136" height="284" rx="24" fill="url(#final-label)"/>
+      <rect x="110" y="144" width="108" height="24" rx="8" fill="#57489e"/>
+      <rect x="117" y="147" width="94" height="4" rx="2" fill="#d0c3ff" opacity=".6"/>
+      <path d="M111 194V379" stroke="#f4eeff" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+      <path d="M215 201V394" stroke="#42317e" stroke-width="2" stroke-linecap="round" opacity=".28"/>
+      <text x="164" y="300" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="30" font-weight="bold">GLOW</text>
+      <text x="164" y="323" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="10" letter-spacing="2">MAKE IT BRIGHT</text>
+    </g>
+  </defs>
+  <rect width="1080" height="760" fill="#0d0b13"/>
+  <text x="32" y="53" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="25" font-weight="bold">GLOW · FINAL PREVIEW</text>
+  <text x="1048" y="51" text-anchor="end" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="12" letter-spacing="1.6">THE FINISHED COMPOSITION</text>
+
+  <g transform="translate(32 92)" clip-path="url(#final-frame)">
+    <rect width="328" height="580" rx="20" fill="url(#final-panel)" stroke="#584474"/>
+    <circle cx="230" cy="155" r="143" fill="url(#final-halo)"/>
+    <circle cx="262" cy="122" r="74" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MEET GLOW</text>
+    <text x="24" y="85" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="13">A brighter everyday.</text>
+    <use href="#final-bottle"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">01 / THE INTRODUCTION</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">ONE CLEAR FIRST IMPRESSION</text>
+  </g>
+  <g transform="translate(376 92)" clip-path="url(#final-frame)">
+    <rect width="328" height="580" rx="20" fill="url(#final-panel)" stroke="#584474"/>
+    <circle cx="164" cy="292" r="160" fill="url(#final-halo)"/>
+    <circle cx="164" cy="294" r="131" fill="none" stroke="#8b73ce" stroke-width="1" opacity=".55"/>
+    <circle cx="164" cy="294" r="111" fill="none" stroke="#b8a3f2" stroke-width="1" opacity=".34"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MAKE IT BRIGHT</text>
+    <text x="24" y="85" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="13">Find your kind of energy.</text>
+    <g transform="rotate(-4 164 294)"><use href="#final-bottle"/></g>
+    <circle cx="61" cy="173" r="5" fill="#6e60ee" opacity=".75"/>
+    <circle cx="277" cy="382" r="3" fill="#6e60ee" opacity=".65"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">02 / THE MOMENT</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">A LITTLE MORE POSSIBILITY</text>
+  </g>
+  <g transform="translate(720 92)" clip-path="url(#final-frame)">
+    <rect width="328" height="580" rx="20" fill="url(#final-panel)" stroke="#584474"/>
+    <circle cx="164" cy="257" r="165" fill="url(#final-halo)"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="17" font-weight="bold">CREATE YOUR MOMENT</text>
+    <text x="24" y="85" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="13">Make the day your own.</text>
+    <g transform="translate(16 7) scale(.9)"><use href="#final-bottle"/></g>
+    <rect x="31" y="440" width="266" height="47" rx="23.5" fill="#6e60ee"/>
+    <text x="164" y="469" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="14" font-weight="bold" letter-spacing="1">CREATE YOUR MOMENT.</text>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">03 / THE SIGN-OFF</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">GLOW / MAKE IT BRIGHT</text>
+  </g>
+  <text x="32" y="716" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="17">Illustrated cover · Fictional brand · Original delivery is a separate file.</text>
+  <text x="32" y="742" fill="#9588b4" font-family="Arial,sans-serif" font-size="13">AIC BAZAAR / STATIC FINAL PREVIEW</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="760" viewBox="0 0 1080 760" role="img" aria-labelledby="draft-title draft-description">
+  <title id="draft-title">GLOW · Draft preview</title>
+  <desc id="draft-description">A static illustrated cover with three violet GLOW bottle compositions and subtle draft alignment guides. This fictional artwork previews the draft; it is not the original delivery file recorded on-chain.</desc>
+  <defs>
+    <clipPath id="draft-frame"><rect width="328" height="580" rx="20"/></clipPath>
+    <linearGradient id="draft-label" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#6e60ee"/>
+      <stop offset="1" stop-color="#5141ad"/>
+    </linearGradient>
+    <g id="draft-bottle">
+      <ellipse cx="164" cy="442" rx="77" ry="12" fill="#0d0b13" opacity=".6"/>
+      <rect x="96" y="158" width="136" height="284" rx="24" fill="url(#draft-label)"/>
+      <rect x="110" y="144" width="108" height="24" rx="8" fill="#57489e"/>
+      <path d="M113 193V384" stroke="#e3dcff" stroke-width="3" stroke-linecap="round" opacity=".46"/>
+      <text x="164" y="300" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="30" font-weight="bold">GLOW</text>
+      <text x="164" y="323" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="10" letter-spacing="2">MAKE IT BRIGHT</text>
+    </g>
+    <g id="draft-guide" fill="none" stroke="#9588b4" stroke-width="1" opacity=".55">
+      <rect x="80" y="128" width="168" height="332" rx="5" stroke-dasharray="5 7"/>
+      <path d="M164 106V132M164 456V482M60 294H85M243 294H268"/>
+      <path d="M72 146V120H98M230 120H256V146M72 442V468H98M230 468H256V442"/>
+    </g>
+  </defs>
+  <rect width="1080" height="760" fill="#0d0b13"/>
+  <text x="32" y="53" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="25" font-weight="bold">GLOW · DRAFT PREVIEW</text>
+  <text x="1048" y="51" text-anchor="end" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="12" letter-spacing="1.6">COMPOSITION STUDY</text>
+
+  <g transform="translate(32 92)" clip-path="url(#draft-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="260" cy="130" r="75" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MEET GLOW</text>
+    <use href="#draft-guide"/>
+    <use href="#draft-bottle"/>
+    <path d="M25 495H302" stroke="#594776" stroke-width="1"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">01 / INTRODUCTION</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">PRODUCT IN FRAME</text>
+  </g>
+  <g transform="translate(376 92)" clip-path="url(#draft-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="76" cy="204" r="74" fill="#3b2e64"/>
+    <circle cx="269" cy="349" r="92" fill="#30214f"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MAKE IT BRIGHT</text>
+    <use href="#draft-guide"/>
+    <g transform="rotate(-4 164 294)"><use href="#draft-bottle"/></g>
+    <path d="M25 495H302" stroke="#594776" stroke-width="1"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">02 / THE MOMENT</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">EXPLORING THE COMPOSITION</text>
+  </g>
+  <g transform="translate(720 92)" clip-path="url(#draft-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="230" cy="161" r="104" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="17" font-weight="bold">CREATE YOUR MOMENT</text>
+    <use href="#draft-guide"/>
+    <g transform="rotate(2 164 294)"><use href="#draft-bottle"/></g>
+    <path d="M25 495H302" stroke="#594776" stroke-width="1"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">03 / THE SIGN-OFF</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">DRAFT BRAND COMPOSITION</text>
+  </g>
+  <text x="32" y="716" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="17">Illustrated cover · Fictional brand · Original delivery is a separate file.</text>
+  <text x="32" y="742" fill="#9588b4" font-family="Arial,sans-serif" font-size="13">AIC BAZAAR / STATIC DRAFT PREVIEW</text>
+</svg>

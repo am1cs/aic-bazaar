@@ -1,0 +1,225 @@
+/* Original typographic room. All planes are decorative; the central agreement
+   and actions remain normal DOM content. Geometry uses transform throughout. */
+.page-container:has(.hero-experience) { padding-top: 12px; }
+.hero-experience {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  width: min(1440px, calc(100% + 80px));
+  height: auto;
+  min-height: clamp(680px, calc(100svh - 132px), 880px);
+  margin: 0 -40px 18px;
+  overflow: hidden;
+  background: #000;
+}
+.hero-room {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  perspective: 1200px;
+  perspective-origin: 50% 46%;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+}
+.room-scroll, .room-camera {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+.room-scroll {
+  transform-origin: 50% 55%;
+  transform: none;
+}
+.room-camera {
+  transform-origin: 50% 48%;
+  transform: translate3d(0, 0, -42px) rotateX(-.4deg) rotateY(0deg);
+}
+.room-plane {
+  position: absolute;
+  display: flex;
+  color: #6e60ee;
+  font-family: 'Arial Black', 'Impact', 'Segoe UI', Arial, sans-serif;
+  font-weight: 900;
+  line-height: .8;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  user-select: none;
+}
+.room-plane > span { display: block; }
+.room-ceiling {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 24%;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: clamp(100px, 11vw, 168px);
+  transform-origin: 50% 0;
+  transform: translate3d(0, 0, 20px) rotateX(-24deg);
+}
+.room-ceiling > span { transform: translate3d(-.015em, .02em, 0); }
+.room-left {
+  top: 22%;
+  left: 2%;
+  width: 28%;
+  height: 52%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: .085em;
+  font-size: clamp(72px, 8vw, 112px);
+  transform-origin: 0 50%;
+  transform: translate3d(0, 0, 16px) rotateY(32deg) rotateZ(-1deg);
+}
+.room-left > span:first-child { font-size: .72em; }
+.room-right {
+  top: 22%;
+  right: 2%;
+  width: 28%;
+  height: 52%;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: .085em;
+  font-size: clamp(72px, 8vw, 112px);
+  transform-origin: 100% 50%;
+  transform: translate3d(0, 0, 16px) rotateY(-32deg) rotateZ(1deg);
+}
+.room-right > span:first-child { font-size: .72em; }
+.room-floor {
+  bottom: -1%;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .035em;
+  font-size: clamp(96px, 10.2vw, 155px);
+  transform-origin: 50% 100%;
+  transform: translate3d(0, 0, 20px) rotateX(32deg);
+}
+.room-floor > span:first-child { font-size: .48em; letter-spacing: -.045em; }
+.room-back {
+  display: none;
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  color: #6e60ee;
+  font: 400 clamp(90px, 10vw, 150px)/1 Arial, sans-serif;
+  opacity: .48;
+  transform: translate3d(-50%, 0, -440px);
+  backface-visibility: hidden;
+  user-select: none;
+}
+.cinematic-copy {
+  position: relative;
+  z-index: 2;
+  width: min(620px, calc(100% - 56px));
+  margin: 0 auto;
+  padding: 22px 20px 26px;
+  background: #000;
+  text-align: center;
+}
+.cinematic-copy > .eyebrow { justify-content: center; margin-bottom: 16px; color: #e5e5e5; font-size: .72rem; letter-spacing: .07em; }
+.cinematic-copy .hero-title { max-width: 600px; margin: 0 auto; font-size: clamp(2.65rem, 3.8vw, 3.65rem); line-height: 1.04; letter-spacing: -.045em; }
+.cinematic-copy .hero-title em { color: #fff; font-family: inherit; font-style: normal; font-weight: 900; }
+.cinematic-copy .hero-description { max-width: 500px; margin: 20px auto 0; color: #d8d8d8; font-size: 1rem; line-height: 1.65; }
+.cinematic-copy .hero-actions { justify-content: center; gap: 11px; margin-top: 22px; }
+.cinematic-copy .hero-actions .button { min-height: 52px; padding: 13px 24px; font-size: .9rem; }
+.cinematic-copy > .section-note { max-width: 500px; margin: 16px auto 0; color: #c4c4c4; font-size: .75rem; line-height: 1.5; }
+.room-corner-label { position: absolute; z-index: 2; left: 32px; bottom: 16px; color: #b3b3b3; font: 500 .64rem/1.4 var(--font-mono, monospace); letter-spacing: .045em; }
+
+/* Marketing copy shares a readable baseline; monetary operation screens keep
+   their own type rules. These overrides are confined to the Home scene. */
+.motion-scene .protocol-item > span, .motion-scene .section-index { color: #bdbdbd; font-size: .72rem; }
+.motion-scene .protocol-item strong { color: #eee; font-size: .9rem; }
+.motion-scene .feature-card h3 { font-size: 1.2rem; }
+.motion-scene .feature-card p { color: #c8c8c8; font-size: .9375rem; }
+.motion-scene .home-section > .section-heading .section-note { color: #c4c4c4; font-size: .9375rem; }
+.motion-scene .demo-art figcaption { color: #e5e5e5; font-size: .75rem; }
+.motion-scene .demo-project > .field-help, .motion-scene .home-access > .field-help { color: #c4c4c4; font-size: .875rem; }
+
+/* Optional compact brief panel below the room, never inside the 3D scene. */
+.cinematic-workbench { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 430px); align-items: center; gap: 42px; padding-top: 32px; margin-top: 26px; border-top: 1px solid #383838; }
+.cinematic-workbench > .home-workbench { max-width: 430px; justify-self: end; transform: none; }
+.cinematic-workbench h2 { max-width: 550px; font-size: clamp(1.75rem, 2.5vw, 2.4rem); line-height: 1.05; }
+.cinematic-workbench p { max-width: 460px; color: #b3b3b3; font-size: .84rem; line-height: 1.7; }
+
+/* Camera movement requires explicit readiness, enabled motion and visibility. */
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-experience.is-in-view .room-scroll {
+  transform: translate3d(0, calc(-1 * var(--scroll-shift, 0px)), 0) scale(var(--scroll-zoom, 1)) rotateX(var(--scroll-rotation, 0deg));
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-experience.is-in-view .room-camera {
+  animation: cinematic-room-drift 22s ease-in-out 1.2s infinite both;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-experience.is-in-view .hero-room {
+    transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 200ms cubic-bezier(.2,.7,.2,1);
+  }
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-experience.is-in-view:hover .hero-room { will-change: transform; }
+}
+.cinematic-copy:focus-within > :is(.eyebrow, .hero-title, .hero-description, .hero-actions, .section-note) { opacity: 1 !important; translate: none !important; animation: none !important; transition: none !important; }
+.motion-scene[data-motion-paused='true'] .hero-experience .room-camera { animation: none !important; transform: translate3d(0, 0, -42px) rotateX(-.4deg) rotateY(0deg); }
+.motion-scene[data-motion-paused='true'] .hero-experience .room-scroll { transform: none !important; transition: none !important; will-change: auto; }
+.motion-scene[data-motion-paused='true'] .hero-experience .hero-room { transform: none !important; transition: none !important; will-change: auto; }
+@keyframes cinematic-room-drift {
+  0%, 100% { transform: translate3d(-7px, 1px, -60px) rotateX(.65deg) rotateY(-1.25deg); }
+  50% { transform: translate3d(7px, -4px, -16px) rotateX(-.6deg) rotateY(1.25deg); }
+}
+
+@media (max-width: 1100px) {
+  .hero-experience { width: calc(100% + 64px); margin-left: -32px; margin-right: -32px; }
+  .hero-room { perspective: 1050px; }
+  .room-left { left: 1%; font-size: 8vw; }
+  .room-right { right: 1%; font-size: 8vw; }
+  .room-ceiling { font-size: 12vw; }
+  .room-floor { font-size: 12vw; }
+  .cinematic-copy { width: min(600px, calc(100% - 48px)); }
+  .cinematic-copy .hero-title { font-size: 3.2rem; }
+  .cinematic-copy .hero-description { max-width: 480px; font-size: .95rem; }
+  .cinematic-copy .hero-actions .button { font-size: .9rem; padding: 13px 22px; }
+}
+@media (max-width: 850px) {
+  .hero-experience { width: calc(100% + 40px); height: auto; min-height: clamp(660px, calc(100svh - 175px), 840px); margin-left: -20px; margin-right: -20px; }
+  .hero-room { perspective: 900px; perspective-origin: 50% 46%; }
+  .room-ceiling { top: 0; left: 0; width: 100%; height: 22%; font-size: 16vw; transform: translate3d(0, 0, 15px) rotateX(-20deg); }
+  .room-left, .room-right { display: none; }
+  .room-floor { bottom: 0; left: 0; width: 100%; height: 21%; font-size: 15vw; transform: translate3d(0, 0, 16px) rotateX(27deg); }
+  .cinematic-copy { width: min(540px, calc(100% - 44px)); margin: 0 auto; padding: 22px 18px 26px; }
+  .cinematic-copy .hero-title { font-size: clamp(2.5rem, 5.8vw, 3rem); }
+  .cinematic-copy .hero-description { max-width: 460px; font-size: .95rem; }
+  .room-corner-label { left: 23px; font-size: .6rem; }
+  .cinematic-workbench { grid-template-columns: 1fr; gap: 24px; }
+  .cinematic-workbench > .home-workbench { justify-self: start; width: 100%; }
+}
+@media (max-width: 540px) {
+  .page-container:has(.hero-experience) { padding-top: 8px; }
+  .hero-experience { width: calc(100% + 32px); height: auto; min-height: clamp(680px, calc(100svh - 170px), 840px); margin-left: -16px; margin-right: -16px; margin-bottom: 12px; }
+  .hero-room { perspective: 720px; perspective-origin: 50% 47%; }
+  .room-camera { transform: translate3d(0, 0, -30px) rotateX(-.4deg) rotateY(0deg); }
+  .room-ceiling { top: 10px; left: 0; width: 100%; height: 16%; font-size: 15.2vw; letter-spacing: -.045em; transform: translate3d(0, 0, 12px) rotateX(-16deg); }
+  .room-floor { bottom: 24px; left: 0; width: 100%; height: 17%; font-size: 15.5vw; gap: .04em; transform: translate3d(0, 0, 12px) rotateX(22deg); }
+  .room-floor > span:first-child { font-size: .6em; }
+  .cinematic-copy { width: calc(100% - 32px); max-width: 400px; margin: 0 auto; padding: 20px 8px 24px; }
+  .cinematic-copy > .eyebrow { max-width: 300px; margin-bottom: 16px; font-size: .6875rem; letter-spacing: .035em; }
+  .cinematic-copy .hero-title { font-size: clamp(2rem, 9.5vw, 2.5rem); letter-spacing: -.045em; }
+  .cinematic-copy .hero-description { max-width: 320px; font-size: .9rem; line-height: 1.65; margin-top: 18px; }
+  .cinematic-copy .hero-actions { gap: 9px; margin-top: 22px; }
+  .cinematic-copy .hero-actions .button { min-height: 50px; padding: 12px 18px; font-size: .875rem; }
+  .cinematic-copy > .section-note { font-size: .75rem; margin-top: 16px; }
+  .room-corner-label { left: 18px; bottom: 9px; font-size: .54rem; letter-spacing: .02em; }
+  .motion-scene .feature-card p, .motion-scene .home-section > .section-heading .section-note { font-size: .9rem; }
+  .motion-scene .protocol-item strong { font-size: .875rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-experience .room-camera { animation: none !important; transform: translate3d(0, 0, -42px) rotateX(-.4deg) rotateY(0deg); }
+  .hero-experience .hero-room { transform: none !important; transition: none !important; will-change: auto !important; }
+  .hero-experience .room-scroll { transform: none !important; transition: none !important; will-change: auto !important; }
+  .cinematic-copy, .cinematic-copy > * { opacity: 1 !important; animation: none !important; transition: none !important; }
+}

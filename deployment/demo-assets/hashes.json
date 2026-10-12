@@ -1,0 +1,14 @@
+{
+  "concept.svg": {
+    "sha256": "a8a038a29b73680836d2ad7664298603760f7b2f39a234b008f79153bfab1097",
+    "bytes": 2544
+  },
+  "draft.mp4": {
+    "sha256": "c38cc90894fa4562841bfa63f9eba3229b9a48d5c98622d9e07dcdcd4e360734",
+    "bytes": 62288
+  },
+  "final.mp4": {
+    "sha256": "7c43d2efe180c9053abf312ec1adeee61cbad742b6583d53a6af429cac27d1a0",
+    "bytes": 53866
+  }
+}

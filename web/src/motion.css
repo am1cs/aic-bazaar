@@ -1,0 +1,189 @@
+/* Decorative motion only. A missing readiness flag leaves the entire page visible.
+   Set data-motion-ready only after IntersectionObserver is available and attached. */
+.motion-scene { position: relative; display: block; }
+.motion-toolbar { display: flex; align-items: center; justify-content: flex-end; height: 32px; margin: 0 0 10px; }
+.workbench-motion { min-width: 0; transform-origin: 50% 50%; }
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 13px;
+  border: 1px solid #666;
+  border-radius: 60px;
+  background: transparent;
+  color: #d4d4d4;
+  font: 500 .72rem/1.4 var(--font-body, sans-serif);
+  text-decoration: none;
+}
+.motion-toggle:focus-visible { outline: 3px solid #33d0ff; outline-offset: 4px; }
+.motion-toolbar .motion-toggle { min-height: 32px; font-size: .65rem; }
+.motion-toggle:disabled { color: #aaa; border-color: #555; background: #111; }
+@media (max-width: 540px) {
+  .motion-toolbar { height: 36px; }
+  .motion-toolbar .motion-toggle { min-height: 36px; font-size: .68rem; }
+}
+
+/* Each introductory animation runs once and settles within 2.2 seconds. */
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-wordmark {
+  animation: motion-wordmark-enter 850ms cubic-bezier(.2,.7,.2,1) 40ms 1 both;
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-wordmark > span {
+  transform-origin: 50% 50%;
+  animation: motion-mark-turn 1050ms cubic-bezier(.2,.7,.2,1) 170ms 1 both;
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-copy > .eyebrow,
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-title,
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-description,
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-actions,
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .hero-copy > .section-note {
+  animation: motion-copy-enter 650ms cubic-bezier(.2,.7,.2,1) var(--intro-delay, 140ms) 1 both;
+}
+.hero-copy > .eyebrow { --intro-delay: 140ms; }
+.hero-title { --intro-delay: 230ms; }
+.hero-description { --intro-delay: 330ms; }
+.hero-actions { --intro-delay: 420ms; }
+.hero-copy > .section-note { --intro-delay: 510ms; }
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .workbench-motion {
+  animation: motion-board-enter 900ms cubic-bezier(.18,.75,.22,1) 240ms 1 both;
+}
+
+/* Sections reveal their headings and cards separately. Scroll progress supplies
+   a visible residual offset after entry; missing progress defaults to settled. */
+.feature-card:nth-child(3n + 1) { --reveal-x: -18px; --reveal-delay: 0ms; }
+.feature-card:nth-child(3n + 2) { --reveal-x: 0px; --reveal-delay: 85ms; }
+.feature-card:nth-child(3n) { --reveal-x: 18px; --reveal-delay: 170ms; }
+.demo-art:nth-child(3n + 1) { --reveal-delay: 0ms; }
+.demo-art:nth-child(3n + 2) { --reveal-delay: 90ms; }
+.demo-art:nth-child(3n) { --reveal-delay: 180ms; }
+.home-protocol { --reveal-y: 32px; }
+.demo-art { --reveal-y: 58px; }
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) :is(.home-protocol, .feature-card, .demo-art) {
+  opacity: 0;
+  translate: var(--reveal-x, 0px) var(--reveal-y, 50px);
+  transition: opacity 750ms cubic-bezier(.2,.7,.2,1), translate 850ms cubic-bezier(.2,.7,.2,1), border-color 200ms ease;
+  transition-delay: var(--reveal-delay, 0ms), var(--reveal-delay, 0ms), 0ms;
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) :is(.home-protocol, .feature-card, .demo-art).is-motion-visible {
+  opacity: 1;
+  translate: calc(var(--reveal-x, 0px) * (1 - var(--scroll-reveal, 1))) calc(var(--reveal-y, 50px) * (1 - var(--scroll-reveal, 1)));
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .home-section > .section-heading {
+  opacity: 0;
+  translate: 0 24px;
+  transition: opacity 650ms cubic-bezier(.2,.7,.2,1), translate 750ms cubic-bezier(.2,.7,.2,1);
+}
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .home-section.is-motion-visible > .section-heading {
+  opacity: 1;
+  translate: 0 calc(24px * (1 - var(--scroll-reveal, 1)));
+}
+.motion-scene[data-motion-ready='true'] :is(.home-section, .home-protocol, .home-access, .feature-card, .demo-art):focus-within {
+  opacity: 1 !important;
+  translate: 0 0 !important;
+  transition: none !important;
+}
+.motion-scene[data-motion-ready='true'] .home-section:focus-within > .section-heading {
+  opacity: 1 !important;
+  translate: none !important;
+  transition: none !important;
+}
+.motion-scene[data-motion-ready='true'] .hero-copy:focus-within > :is(.eyebrow, .hero-title, .hero-description, .hero-actions, .section-note) {
+  opacity: 1 !important;
+  translate: 0 0 !important;
+  animation: none !important;
+  transition: none !important;
+}
+@media (max-width: 540px) {
+  .motion-scene .feature-card { --reveal-x: 0px; --reveal-y: 42px; }
+}
+
+/* The illustrative artwork glides once, then breathes gently while visible and
+   explicitly enabled. Leaving the board, Pause, and native Reduce stop both. */
+.motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .home-workbench.is-in-view .preview-shot img[src$='.svg'] {
+  animation: motion-frame-glide 1000ms cubic-bezier(.2,.7,.2,1) var(--frame-delay, 300ms) 1 both,
+    motion-art-breathe var(--ambient-period, 7s) ease-in-out var(--ambient-delay, 1600ms) infinite normal none;
+}
+.preview-shot:nth-child(1) { --frame-delay: 300ms; --ambient-period: 6.8s; --ambient-delay: 1600ms; }
+.preview-shot:nth-child(2) { --frame-delay: 430ms; --ambient-period: 7.4s; --ambient-delay: 1800ms; }
+.preview-shot:nth-child(3) { --frame-delay: 560ms; --ambient-period: 8s; --ambient-delay: 2000ms; }
+
+/* Pointer effects are confined to the illustrative inner layer and fine pointers. */
+@media (hover: hover) and (pointer: fine) {
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .workbench-motion {
+    transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translate3d(var(--pointer-x, 0px), var(--pointer-y, 0px), 0);
+    transition: transform 160ms cubic-bezier(.2,.7,.2,1);
+  }
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .home-workbench:hover .workbench-motion { will-change: transform; }
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .feature-card.is-motion-visible:hover {
+    border-color: #a69aee;
+    translate: calc(var(--reveal-x, 0px) * (1 - var(--scroll-reveal, 1))) calc(var(--reveal-y, 50px) * (1 - var(--scroll-reveal, 1)) - 3px);
+    transition-delay: 0ms;
+  }
+  .motion-scene[data-motion-ready='true']:not([data-motion-paused='true']) .demo-art.is-motion-visible:hover { border-color: #aaa; }
+  .motion-scene :is(.hero-actions, .demo-links, .home-access) .button > span[aria-hidden='true'] {
+    display: inline-block;
+    transition: translate 180ms cubic-bezier(.2,.7,.2,1);
+  }
+  .motion-scene:not([data-motion-paused='true']) :is(.hero-actions, .demo-links, .home-access) .button:not(:disabled):hover > span[aria-hidden='true'] { translate: 3px -1px; }
+  .motion-toggle:hover { color: #fff; background: #252525; border-color: #999; }
+}
+
+/* Pausing makes content immediately usable, including cards not yet observed. */
+.motion-scene[data-motion-paused='true'] :is(.hero-wordmark, .hero-wordmark > span, .hero-copy > .eyebrow, .hero-title, .hero-description, .hero-actions, .hero-copy > .section-note, .workbench-motion, .preview-shot img, .home-section, .home-protocol, .home-access, .feature-card, .demo-art) {
+  opacity: 1 !important;
+  clip-path: none !important;
+  translate: none !important;
+  scale: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+.motion-scene[data-motion-paused='true'] .home-section > .section-heading { opacity: 1 !important; translate: none !important; transition: none !important; }
+.motion-scene[data-motion-paused='true'] .workbench-motion,
+.motion-scene[data-motion-paused='true'] .preview-shot img,
+.motion-scene[data-motion-paused='true'] .hero-wordmark > span { transform: none !important; will-change: auto; }
+.motion-scene[data-motion-paused='true'] .button > span[aria-hidden='true'] { translate: none !important; transition: none !important; }
+
+@keyframes motion-wordmark-enter {
+  from { opacity: .35; translate: 0 24px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes motion-mark-turn {
+  from { opacity: 0; transform: rotate(-45deg) scale(.76); }
+  65% { opacity: 1; transform: rotate(7deg) scale(1); }
+  to { opacity: 1; transform: rotate(0deg) scale(1); }
+}
+@keyframes motion-copy-enter {
+  from { opacity: 0; translate: 0 14px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes motion-board-enter {
+  from { opacity: 0; translate: 0 17px; scale: .975; }
+  to { opacity: 1; translate: 0 0; scale: 1; }
+}
+@keyframes motion-frame-glide {
+  from { transform: translate3d(-1.5%, 0, 0) scale(1.06); }
+  to { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes motion-art-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -2px, 0) scale(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-scene, .motion-scene *, .motion-scene *::before, .motion-scene *::after, .motion-toggle {
+    translate: none !important;
+    scale: none !important;
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .motion-scene :is(.hero-wordmark, .hero-wordmark > span, .hero-copy > .eyebrow, .hero-title, .hero-description, .hero-actions, .hero-copy > .section-note, .workbench-motion, .home-section, .home-protocol, .home-access, .feature-card, .demo-art) {
+    opacity: 1 !important;
+    clip-path: none !important;
+  }
+  .motion-scene .home-section > .section-heading { opacity: 1 !important; }
+  .motion-scene .workbench-motion,
+  .motion-scene .preview-shot img,
+  .motion-scene .hero-wordmark > span { transform: none !important; will-change: auto !important; }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@aic-bazaar/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify:devnet": "vitest run --config vite.devnet.config.ts"
+  },
+  "dependencies": {
+    "@aic-bazaar/sdk": "file:../sdk",
+    "@coral-xyz/anchor": "0.32.1",
+    "bn.js": "5.2.5",
+    "bs58": "6.0.0",
+    "buffer": "6.0.3",
+    "@solana/wallet-adapter-react": "0.15.39",
+    "@solana/wallet-adapter-react-ui": "0.9.39",
+    "@solana/wallet-adapter-phantom": "0.9.29",
+    "@solana/web3.js": "1.98.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-router-dom": "^7.9.0"
+  },
+  "devDependencies": {
+    "@types/bn.js": "5.1.6",
+    "@tailwindcss/vite": "4.3.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "jsdom": "^27.0.0",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.8.3",
+    "vite": "8.3.4",
+    "vitest": "5.0.4"
+  },
+  "overrides": {
+    "bn.js": "$bn.js",
+    "@solana/wallet-adapter-react": "0.15.39",
+    "@solana/wallet-adapter-base": "0.9.27",
+    "@solana/wallet-adapter-base-ui": "0.1.6"
+  }
+}

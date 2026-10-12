@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="760" viewBox="0 0 1080 760" role="img" aria-labelledby="concept-title concept-description">
+  <title id="concept-title">GLOW · Concept preview</title>
+  <desc id="concept-description">A static purple illustrated cover with three violet GLOW bottles, showing the introduction, the bright moment and the brand sign-off. This fictional artwork previews the concept; it is not the original delivery file recorded on-chain.</desc>
+  <defs>
+    <clipPath id="concept-frame"><rect width="328" height="580" rx="20"/></clipPath>
+    <g id="concept-bottle">
+      <rect x="96" y="158" width="136" height="284" rx="24" fill="#6e60ee"/>
+      <rect x="110" y="144" width="108" height="24" rx="8" fill="#57489e"/>
+      <text x="164" y="300" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="30" font-weight="bold">GLOW</text>
+    </g>
+  </defs>
+  <rect width="1080" height="760" fill="#0d0b13"/>
+  <text x="32" y="53" fill="#f7f4ff" font-family="Arial,sans-serif" font-size="25" font-weight="bold">GLOW · CONCEPT PREVIEW</text>
+  <text x="1048" y="51" text-anchor="end" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="12" letter-spacing="1.6">THREE-FRAME STORYBOARD</text>
+
+  <g transform="translate(32 92)" clip-path="url(#concept-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="260" cy="130" r="75" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MEET GLOW</text>
+    <use href="#concept-bottle"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">01 / THE IDEA</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">INTRODUCE THE PRODUCT</text>
+  </g>
+  <g transform="translate(376 92)" clip-path="url(#concept-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="260" cy="130" r="75" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="19" font-weight="bold">MAKE IT BRIGHT</text>
+    <use href="#concept-bottle"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">02 / THE MOMENT</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">BUILD THE BRAND FEELING</text>
+  </g>
+  <g transform="translate(720 92)" clip-path="url(#concept-frame)">
+    <rect width="328" height="580" rx="20" fill="#241b35" stroke="#4b3b68"/>
+    <circle cx="260" cy="130" r="75" fill="#3b2e64"/>
+    <text x="24" y="60" fill="#e3dcff" font-family="Arial,sans-serif" font-size="17" font-weight="bold">CREATE YOUR MOMENT</text>
+    <use href="#concept-bottle"/>
+    <text x="24" y="532" fill="#e3dcff" font-family="Arial,sans-serif" font-size="16">03 / THE SIGN-OFF</text>
+    <text x="24" y="554" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="11" letter-spacing="1.4">A SIMPLE CLOSING MESSAGE</text>
+  </g>
+  <text x="32" y="716" fill="#c2b7d8" font-family="Arial,sans-serif" font-size="17">Illustrated cover · Fictional brand · Original delivery is a separate file.</text>
+  <text x="32" y="742" fill="#9588b4" font-family="Arial,sans-serif" font-size="13">AIC BAZAAR / STATIC CONCEPT PREVIEW</text>
+</svg>

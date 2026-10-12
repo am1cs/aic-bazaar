@@ -1,0 +1,3 @@
+public/demo/concept.svg -text
+public/demo/*.mp4 -text
+public/demo/hashes.json text eol=lf
