@@ -63,6 +63,15 @@ async function unknown(withSignature = true) {
   return mutation;
 }
 
+function technicalDetails() {
+  return screen.getByText('Technical details').closest('details') as HTMLDetailsElement;
+}
+
+function expandTechnicalDetails() {
+  fireEvent.click(screen.getByText('Technical details'));
+  expect(technicalDetails().open).toBe(true);
+}
+
 beforeEach(() => {
   mocks.controller = new OperationController(new MemoryStorage());
   mocks.connection.getSignatureStatuses.mockReset();
@@ -78,6 +87,9 @@ describe('public transaction receipts and recovery', () => {
     expect(screen.getByText('The transaction failed on-chain.')).toBeTruthy();
     expect(screen.queryByRole('button', { name: 'Check transaction status' })).toBeNull();
     expect(screen.getByRole('button', { name: 'Dismiss receipt' })).toBeTruthy();
+    expect(technicalDetails().open).toBe(false);
+    expect(screen.queryByRole('link', { name: /View transaction on Devnet/ })).toBeNull();
+    expandTechnicalDetails();
     expect(screen.getByRole('link', { name: /View transaction on Devnet/ }).getAttribute('href')).toContain(receipt.signature);
   });
 
@@ -139,6 +151,7 @@ describe('public transaction receipts and recovery', () => {
   it('keeps the originating wallet visible after the connected account changes', async () => {
     await unknown();
     const rendered = view('wallet-at-first-render');
+    expandTechnicalDetails();
     expect(screen.getByText(origin.wallet)).toBeTruthy();
     rendered.rerender(<MemoryRouter initialEntries={['/create']}><Harness connectedWallet="newly-connected-wallet" /></MemoryRouter>);
     expect(screen.getByTestId('connected-wallet').textContent).toBe('newly-connected-wallet');
@@ -164,8 +177,75 @@ describe('public transaction receipts and recovery', () => {
     expect(screen.getByText(/Follow the request in your wallet/)).toBeTruthy();
     expect(screen.queryByText(receipt.signature)).toBeNull();
     expect(screen.queryByRole('link', { name: /View transaction on Devnet/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Dismiss receipt' })).toBeNull();
+    expandTechnicalDetails();
+    expect(screen.queryByRole('button', { name: 'Dismiss receipt' })).toBeNull();
     await act(async () => { pending.resolve(receipt); await run; });
     expect(screen.getByText(receipt.signature)).toBeTruthy();
     expect(screen.getByText('confirmed')).toBeTruthy();
+  });
+
+  it('keeps a concise confirmed result and navigation visible while technical addresses are collapsed', async () => {
+    await mocks.controller!.run(origin, async () => ({ ...receipt, refreshError: undefined }));
+    view();
+    expect(screen.getByText('This transaction is confirmed on Solana Devnet.')).toBeTruthy();
+    expect(screen.getByText('confirmed')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Open deal' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Dismiss receipt' })).toBeTruthy();
+    expect(technicalDetails().open).toBe(false);
+    expect(screen.queryByRole('button', { name: 'Copy originating wallet' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Copy deal address' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Copy transaction signature' })).toBeNull();
+    expect(screen.queryByRole('link', { name: /View transaction on Devnet/ })).toBeNull();
+
+    expandTechnicalDetails();
+    expect(screen.getByRole('button', { name: 'Copy originating wallet' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Copy deal address' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Copy transaction signature' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: /View transaction on Devnet/ }).getAttribute('href')).toContain(receipt.signature);
+    fireEvent.click(screen.getByText('Technical details'));
+    expect(technicalDetails().open).toBe(false);
+    expect(screen.queryByRole('button', { name: 'Copy transaction signature' })).toBeNull();
+    expect(screen.getByText('This transaction is confirmed on Solana Devnet.')).toBeTruthy();
+  });
+
+  it('keeps unknown recovery actions visible and the operation locked regardless of disclosure state', async () => {
+    const mutation = await unknown();
+    view();
+    const secondMutation = vi.fn(async () => receipt);
+    expect(technicalDetails().open).toBe(false);
+    expect(screen.getByText('Confirmation is uncertain.')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Check transaction status' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Dismiss receipt' })).toBeNull();
+    expandTechnicalDetails();
+    expect(screen.getByRole('button', { name: 'Check transaction status' })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Dismiss receipt' })).toBeNull();
+    fireEvent.click(screen.getByText('Technical details'));
+    expect(technicalDetails().open).toBe(false);
+    await act(async () => { expect(await mocks.controller!.run(origin, secondMutation)).toBeNull(); });
+    expect(secondMutation).not.toHaveBeenCalled();
+    expect(mutation).toHaveBeenCalledTimes(1);
+    expect(mocks.controller!.getSnapshot().attempt?.state).toBe('unknown');
+  });
+
+  it('collapses technical details for a new operation without releasing its pending lock', async () => {
+    await mocks.controller!.run(origin, async () => ({ ...receipt, refreshError: undefined }));
+    view();
+    expandTechnicalDetails();
+    const pending = deferred<MutationResult>();
+    let run!: Promise<MutationResult | null>;
+    act(() => { run = mocks.controller!.run({ ...origin, action: 'Approve Concept' }, () => pending.promise); });
+    expect(screen.getByText('Approve Concept')).toBeTruthy();
+    expect(screen.getByText('pending')).toBeTruthy();
+    expect(technicalDetails().open).toBe(false);
+    expect(screen.getByText(/Follow the request in your wallet/)).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Dismiss receipt' })).toBeNull();
+    const secondMutation = vi.fn(async () => receipt);
+    await act(async () => { expect(await mocks.controller!.run(origin, secondMutation)).toBeNull(); });
+    expect(secondMutation).not.toHaveBeenCalled();
+    await act(async () => { pending.resolve(receipt); await run; });
+    expect(screen.getByText('confirmed')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Dismiss receipt' })).toBeTruthy();
+    expect(technicalDetails().open).toBe(false);
   });
 });

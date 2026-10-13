@@ -25,6 +25,7 @@ const mocks = vi.hoisted(() => ({
   controller: null as OperationController | null,
   connection: { getSignatureStatuses: vi.fn() },
   hashFile: vi.fn<(file: File) => Promise<string>>(),
+  validateMilestoneFile: vi.fn<(file: File, index: number) => Promise<void>>(),
 }));
 
 vi.mock('@solana/wallet-adapter-react', () => ({
@@ -39,6 +40,7 @@ vi.mock('./hooks', () => ({
   useDeal: () => mocks.query,
 }));
 vi.mock('./lib/hashing', () => ({ MAX_FILE_BYTES: 128 * 1024 * 1024, hashFile: mocks.hashFile }));
+vi.mock('./lib/milestoneValidation', () => ({ validateMilestoneFile: mocks.validateMilestoneFile }));
 vi.mock('./transactions/useOperation', () => ({
   useOperation: () => {
     const controller = mocks.controller!;
@@ -108,7 +110,7 @@ function tree() {
 
 function renderPage() { return render(tree()); }
 function confirm() { fireEvent.click(screen.getByRole('button', { name: 'Confirm in wallet' })); }
-function fileInput() { return screen.getByLabelText('Select the exact file to fingerprint') as HTMLInputElement; }
+function fileInput() { return screen.getByLabelText('Select the same delivered file') as HTMLInputElement; }
 
 beforeEach(() => {
   sessionStorage.clear();
@@ -122,6 +124,8 @@ beforeEach(() => {
     method.mockImplementation(async () => receipt());
   }
   mocks.hashFile.mockReset();
+  mocks.validateMilestoneFile.mockReset();
+  mocks.validateMilestoneFile.mockResolvedValue(undefined);
   mocks.hashFile.mockImplementation(async (file) => file.name === 'material-a.mp4' ? hashA : hashB);
   mocks.connection.getSignatureStatuses.mockReset();
   mocks.controller = new OperationController(sessionStorage);
@@ -162,7 +166,7 @@ describe('deal roles, current submissions, and approval', () => {
     const url = `https://example.com/new-${expectedRevision}.mp4`;
     const file = new File(['material A'], 'material-a.mp4', { type: 'video/mp4' });
     renderPage();
-    fireEvent.change(screen.getByLabelText('Material link'), { target: { value: url } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: url } });
     fireEvent.change(fileInput(), { target: { files: [file] } });
     await screen.findByText(hashA);
     expect(mocks.hashFile).toHaveBeenCalledExactlyOnceWith(file);
@@ -177,7 +181,7 @@ describe('deal roles, current submissions, and approval', () => {
     const fileA = new File(['A'], 'material-a.mp4'), fileB = new File(['B'], 'material-b.mp4');
     mocks.hashFile.mockImplementation((file) => file === fileA ? a.promise : b.promise);
     renderPage();
-    fireEvent.change(screen.getByLabelText('Material link'), { target: { value: 'https://example.com/material-b.mp4' } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/material-b.mp4' } });
     fireEvent.change(fileInput(), { target: { files: [fileA] } });
     fireEvent.change(fileInput(), { target: { files: [fileB] } });
     await act(async () => { b.resolve(hashB); await b.promise; });
@@ -194,7 +198,7 @@ describe('deal roles, current submissions, and approval', () => {
   it('requires a new file selection after another device advances the current milestone', async () => {
     mocks.walletAddress = addresses.creator;
     const page = renderPage();
-    fireEvent.change(screen.getByLabelText('Material link'), { target: { value: 'https://example.com/concept.mp4' } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/concept.mp4' } });
     const previousFileInput = fileInput();
     fireEvent.change(previousFileInput, { target: { files: [new File(['Concept'], 'material-a.mp4')] } });
     await screen.findByText(hashA);
@@ -204,13 +208,13 @@ describe('deal roles, current submissions, and approval', () => {
     mocks.query.data = afterPaidConcept();
     page.rerender(tree());
     expect(screen.getByRole('heading', { name: 'Submit Draft' })).toBeDefined();
-    expect((screen.getByLabelText('Material link') as HTMLInputElement).value).toBe('');
+    expect((screen.getByLabelText('Delivery link') as HTMLInputElement).value).toBe('');
     expect(screen.queryByText(hashA)).toBeNull();
     expect(fileInput()).not.toBe(previousFileInput);
     expect(fileInput().files?.length).toBe(0);
     const submit = screen.getByRole('button', { name: 'Submit milestone' }) as HTMLButtonElement;
     expect(submit.disabled).toBe(true);
-    fireEvent.change(screen.getByLabelText('Material link'), { target: { value: 'https://example.com/draft.mp4' } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/draft.mp4' } });
     // Also verify the form handler rejects submission if browser controls are bypassed.
     fireEvent.submit(submit.closest('form')!);
     expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
@@ -229,9 +233,9 @@ describe('deal roles, current submissions, and approval', () => {
     const pending = deferred<string>();
     mocks.hashFile.mockReturnValueOnce(pending.promise);
     const page = renderPage();
-    fireEvent.change(screen.getByLabelText('Material link'), { target: { value: 'https://example.com/concept.mp4' } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/concept.mp4' } });
     fireEvent.change(fileInput(), { target: { files: [new File(['Concept'], 'material-a.mp4')] } });
-    expect(screen.getByText('Calculating SHA-256…')).toBeDefined();
+    expect(screen.getByText('Checking file and calculating SHA-256…')).toBeDefined();
 
     mocks.query.data = afterPaidConcept();
     page.rerender(tree());
@@ -239,7 +243,7 @@ describe('deal roles, current submissions, and approval', () => {
     expect(screen.getByRole('heading', { name: 'Submit Draft' })).toBeDefined();
     expect(screen.queryByText(hashA)).toBeNull();
     expect(screen.queryByText('material-a.mp4')).toBeNull();
-    expect(screen.queryByText('Calculating SHA-256…')).toBeNull();
+    expect(screen.queryByText('Checking file and calculating SHA-256…')).toBeNull();
     expect((screen.getByRole('button', { name: 'Submit milestone' }) as HTMLButtonElement).disabled).toBe(true);
     expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
   });
@@ -268,8 +272,10 @@ describe('deal roles, current submissions, and approval', () => {
   it('allows a client to open a dispute before any material exists', async () => {
     mocks.walletAddress = addresses.client;
     renderPage();
-    fireEvent.change(screen.getByLabelText('Reason for the dispute'), { target: { value: 'The agreed direction needs arbitration.' } });
+    expect(screen.queryByLabelText('Reason for the dispute')).toBeNull();
     fireEvent.click(screen.getByRole('button', { name: 'Open dispute' }));
+    fireEvent.change(screen.getByLabelText('Reason for the dispute'), { target: { value: 'The agreed direction needs arbitration.' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm & open dispute' }));
     await waitFor(() => expect(mocks.client.openDispute).toHaveBeenCalledTimes(1));
     expect(mocks.client.openDispute).toHaveBeenCalledWith(dealAddress, 'The agreed direction needs arbitration.');
     expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
@@ -287,6 +293,97 @@ describe('deal roles, current submissions, and approval', () => {
     fireEvent.click(pay);
     expect(screen.queryByRole('button', { name: 'Confirm in wallet' })).toBeNull();
     expect(mocks.client.approveMilestone).not.toHaveBeenCalled();
+  });
+});
+
+describe('delivery steps, shared file checks and next actions', () => {
+  it('explains hosting and exposes a safe delivery link before selecting a file', () => {
+    mocks.walletAddress = addresses.creator;
+    renderPage();
+    expect(screen.getByRole('list', { name: 'Delivery steps' }).textContent).toBe('Host your filePaste its delivery linkSelect the same file');
+    expect(screen.getByText('Selecting a file does not upload it. The client receives your delivery link.')).toBeDefined();
+    expect(fileInput().disabled).toBe(true);
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'http://example.com/concept.svg' } });
+    expect(screen.queryByRole('link', { name: /Open delivery link/ })).toBeNull();
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/concept.svg' } });
+    expect(fileInput().disabled).toBe(false);
+    const link = screen.getByRole('link', { name: /Open delivery link/ });
+    expect(link.getAttribute('href')).toBe('https://example.com/concept.svg');
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(mocks.validateMilestoneFile).not.toHaveBeenCalled();
+    expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
+  });
+
+  it('waits for shared validation before fingerprinting or asking for a transaction', async () => {
+    mocks.walletAddress = addresses.creator;
+    mocks.query.data = afterPaidConcept();
+    const validation = deferred<void>();
+    mocks.validateMilestoneFile.mockReturnValue(validation.promise);
+    const file = new File(['Draft'], 'material-a.mp4', { type: 'video/mp4' });
+    renderPage();
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/draft.mp4' } });
+    fireEvent.change(fileInput(), { target: { files: [file] } });
+    expect(mocks.validateMilestoneFile).toHaveBeenCalledExactlyOnceWith(file, 1);
+    expect(mocks.hashFile).not.toHaveBeenCalled();
+    expect((screen.getByRole('button', { name: 'Submit milestone' }) as HTMLButtonElement).disabled).toBe(true);
+    await act(async () => { validation.resolve(); await validation.promise; });
+    await screen.findByText(hashA);
+    expect(mocks.hashFile).toHaveBeenCalledExactlyOnceWith(file);
+    expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
+  });
+
+  it('keeps a validation error visible without hashing or submitting', async () => {
+    mocks.walletAddress = addresses.creator;
+    mocks.validateMilestoneFile.mockRejectedValue(new Error('Concept requires a supported image file.'));
+    renderPage();
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/concept.svg' } });
+    fireEvent.change(fileInput(), { target: { files: [new File(['wrong'], 'concept.txt')] } });
+    await screen.findByText('Concept requires a supported image file.');
+    expect(mocks.hashFile).not.toHaveBeenCalled();
+    expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
+    expect((screen.getByRole('button', { name: 'Submit milestone' }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it('invalidates a selected file when the delivery link changes', async () => {
+    mocks.walletAddress = addresses.creator;
+    const validation = deferred<void>();
+    mocks.validateMilestoneFile.mockReturnValue(validation.promise);
+    renderPage();
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/a.svg' } });
+    const oldInput = fileInput();
+    fireEvent.change(oldInput, { target: { files: [new File(['A'], 'material-a.mp4')] } });
+    fireEvent.change(screen.getByLabelText('Delivery link'), { target: { value: 'https://example.com/b.svg' } });
+    await act(async () => { validation.resolve(); await validation.promise; });
+    expect(mocks.hashFile).not.toHaveBeenCalled();
+    expect(fileInput()).not.toBe(oldInput);
+    expect(fileInput().files?.length).toBe(0);
+    expect(mocks.client.submitMilestone).not.toHaveBeenCalled();
+  });
+
+  it('shows saved Concept and the next Draft step to the client after payment', () => {
+    mocks.walletAddress = addresses.client;
+    mocks.query.data = afterPaidConcept();
+    mocks.query.data.milestones[0].submission!.url = 'https://example.com/delivered-concept.svg';
+    renderPage();
+    expect(screen.getByText('Concept paid. Waiting for the creator’s Draft.')).toBeDefined();
+    expect(screen.getByRole('img', { name: 'Concept delivery preview' }).getAttribute('src')).toBe('https://example.com/delivered-concept.svg');
+    expect(mocks.hashFile).not.toHaveBeenCalled();
+    expect(mocks.validateMilestoneFile).not.toHaveBeenCalled();
+    expect(screen.queryByLabelText('Select the same delivered file')).toBeNull();
+  });
+
+  it('opens and closes the dispute form without sending an operation', () => {
+    mocks.walletAddress = addresses.client;
+    renderPage();
+    const toggle = screen.getByRole('button', { name: 'Open dispute' });
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    fireEvent.click(toggle);
+    expect(screen.getByLabelText('Reason for the dispute')).toBeDefined();
+    expect(screen.getByRole('button', { name: 'Close dispute form' }).getAttribute('aria-expanded')).toBe('true');
+    fireEvent.click(screen.getByRole('button', { name: 'Close dispute form' }));
+    expect(screen.queryByLabelText('Reason for the dispute')).toBeNull();
+    expect(mocks.client.openDispute).not.toHaveBeenCalled();
   });
 });
 
@@ -346,7 +443,7 @@ describe('dispute settlements and retained history', () => {
     mocks.query.data = value;
     mocks.walletAddress = addresses.client;
     renderPage();
-    const links = screen.getAllByRole('link', { name: /Open submitted material/ });
+    const links = screen.getAllByRole('link', { name: /Open delivery link/ });
     expect(links).toHaveLength(status === 'completed' ? 3 : 1);
     expect(links[0].getAttribute('href')).toBe('https://example.com/stage-0.mp4');
     expect(links[0].getAttribute('rel')).toBe('noopener noreferrer');
