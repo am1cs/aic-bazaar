@@ -5,7 +5,7 @@ import { DeliveryPreview } from './DeliveryPreview';
 afterEach(cleanup);
 
 describe('saved delivery material preview', () => {
-  it.each(['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif', 'apng', 'bmp', 'ico'])('previews a direct %s image from the saved HTTPS URL', (extension) => {
+  it.each(['svg', 'png', 'jpg', 'jpeg', 'jpe', 'jfif', 'gif', 'webp', 'avif', 'apng', 'bmp', 'ico'])('previews a direct %s image from the saved HTTPS URL', (extension) => {
     const url = `https://example.com/delivery/concept.${extension}`;
     render(<DeliveryPreview url={url} label="Concept delivery" />);
     const image = screen.getByRole('img', { name: 'Concept delivery preview' });

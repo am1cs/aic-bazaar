@@ -1,6 +1,6 @@
 # Part 2 status
 
-Status: INTERFACE CORRECTIONS IMPLEMENTED — uncommitted for review; partner media validator integration pending. User reports successful Devnet completion and refund.
+Status: INTERFACE CORRECTIONS VERIFIED — committed for peer review, partner validator/Phantom changes integrated. Final combined Vercel deployment belongs to the partner.
 Owner: @destinesia7187 (Windows).
 Branch: codex/part-2-web.
 
@@ -11,9 +11,9 @@ Branch: codex/part-2-web.
 - Phantom adapter, public wallet-free reads, participant permissions, exact BigInt amounts, local SHA-256, revision guards, explicit reviews and three settlement calculations implemented.
 - Operation controller prevents overlapping mutations. Confirmed, failed and unknown receipts are distinct; unknown outcomes cannot be dismissed or automatically repeated. Creation reviews are consumed before signing and cannot reactivate after recovered confirmation.
 - TypeScript passed, including SDK source, verification checks and Vite configurations.
-- 331 controlled frontend tests passed in 14 files, including URL preview/failure/replacement states, expandable receipts/dispute controls, validator-before-hash ordering and preserved operation locks. Financial and Phantom encoding guards remain covered.
+- 379 controlled frontend tests passed in 16 files, including the partner's file-format/Phantom restoration checks, actual shared-validator loading of all three demo files, URL preview/failure/replacement states, expandable receipts/dispute controls, validator-before-hash ordering and preserved operation locks. Financial and Phantom encoding guards remain covered.
 - Four actual read-only Devnet checks passed: completed deal, resolved/refund deal, exact public asset hashes against completed on-chain submissions, and a fresh real SDK create simulation that intentionally stops before signing or submission.
-- Latest production build passed: 307 modules, JavaScript 991.39 kB / 297.55 kB gzip, CSS 67.91 kB / 14.84 kB gzip.
+- Latest production build passed: 308 modules, main JavaScript 991.68 kB / 297.64 kB gzip, shared media chunk 4.82 kB / 2.26 kB gzip, CSS 67.91 kB / 14.84 kB gzip.
 - Clean clone of implementation commit 05cb977: `npm ci` and `npm run build` passed without installing or editing sibling SDK dependencies; Git working tree stayed clean. All three demo hashes remained exact after checkout on Windows.
 - Baseline Chrome browser QA: 360 px Home/Create/completed deal, 768 px Home/Create, and 1440 px Home/resolved dispute. No horizontal page overflow. Invalid deal addresses show accessible feedback. Direct dispute reload works without a wallet. Navigation from the lower gallery opens a deal at the top.
 - Latest in-app browser QA: 360, 835 and 1440 px Home; no horizontal overflow. Main copy is 16 px desktop, 15.2 px tablet and 14.4 px mobile; the network note is 12 px. Sticky navigation has real destinations, mobile Tab enters the menu and Escape restores its trigger. Hash navigation focuses its heading below the sticky header (104 px heading offset against an 89 px header on desktop).
@@ -43,9 +43,9 @@ Demo walkthrough: docs/demo.md. Human acceptance plan and agent QA: docs/usabili
 
 - The user reports a successful Devnet deal and a refund dispute. Further transaction verification, including other settlement outcomes, belongs to the partner for this checkpoint; no new transaction was signed or submitted by this agent.
 - Two human usability sessions and a product-demo recording.
-- Partner publishes the shared `web/src/lib/media.ts` validator, then integrate and verify the actual module before releasing submission functionality.
-- Partner restores Phantom connection and handles Vercel after the corrections are combined.
-- A separate interface-correction PR remains pending; the user requested no immediate commit and these changes are intentionally uncommitted for review.
+- Actual human acceptance of new materials and restored Phantom on the final combined Vercel origin; the shared validator is now present and tested.
+- Partner handles final Vercel deployment after peer review and merge of the combined corrections.
+- Peer review of the separate interface-correction PR; the user authorized committing on 2026-10-13.
 
 Recovery limitation: reloading before the SDK returns a signature requires manual wallet/Explorer verification. An uncertain creation does not expose its generated deal address through the SDK error; confirmed recovery explains how to find it in Explorer.
 
@@ -68,3 +68,9 @@ Saved on-chain delivery URLs render native image previews or MP4 players with co
 Actual automated validation: `npm test` passed 331 tests / 14 files; `npm run build` passed TypeScript and production compilation. Independent static review found no blocker. Actual local Chrome over the public HTTPS tunnel: direct completed-deal URL loaded real Devnet state without a wallet; old GitHub blob-page links correctly fell back to external links. The separate `/demo/materials` check uses the same preview component and existing unchanged `/demo/concept.svg`, `draft.mp4`, `final.mp4`; its image decoded to 1080×760, both videos loaded with controls and duration 15s, and actual keyboard playback advanced Draft to 5.51s and Final to 11.44s. The intentionally missing file showed an error while preserving Open delivery link. No horizontal page overflow was observed on the desktop check.
 
 Two-computer acceptance was requested with the exact public check/deal links; the human replied “мы все тест делали все было идеально”. This is recorded as human-reported results, not direct observation of the second computer. No new real file submission can be verified until the partner's validator arrives. Updated test site: https://americans-gardening-banners-keep.trycloudflare.com/demo/materials. Public preview and tunnel must remain running. Partner owns final Vercel deployment; no hackathon submission was made.
+
+## Published partner integration and commit — 2026-10-13
+
+After the human authorized committing, the interface changes were preserved in commit 3d313bc. Fetch revealed partner branch head 6570a39, including 0a7cd84 (Phantom restoration and agreed file validator) and public Devnet/Vercel verification evidence. That branch was merged without conflicts or hand edits to partner files. `providers.tsx`, its tests, `lib/media.ts`, its tests and `web/vercel.json` match the published partner branch exactly; SDK, contract and shared API are unchanged.
+
+The shared validator is now a required explicit module import through our integration adapter. It runs before fingerprinting and signature requests. Three real demo asset files pass through the actual published export, and the same path rejects image files for Draft/Final; no validation stub is used in the production path. JPEG .jpe/.jfif previews also match the partner's accepted image formats. Final `npm test`: 379 passed / 16 files. Final `npm run build`: TypeScript and production build passed, with `/assets/index-DezR0FXm.js` and `/assets/media-BZCQrnPf.js` in the existing Cloudflare preview. Partner's stable Vercel origin is https://aic-bazaar.vercel.app, but its recorded deployment predates these combined interface corrections; no final deployment is claimed or performed by this agent. No wallet transaction or hackathon submission was performed.

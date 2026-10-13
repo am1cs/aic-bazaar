@@ -8,7 +8,7 @@ function previewKind(url: string): PreviewKind {
   // This only chooses a browser preview for a saved delivery URL. File validation
   // belongs to the shared milestone validator before fingerprinting or signing.
   const pathname = new URL(url).pathname.toLowerCase();
-  if (/\.(?:png|jpe?g|gif|webp|svg|avif|apng|bmp|ico)$/.test(pathname)) return 'image';
+  if (/\.(?:png|jpe?g|jpe|jfif|gif|webp|svg|avif|apng|bmp|ico)$/.test(pathname)) return 'image';
   if (/\.mp4$/.test(pathname)) return 'video';
   return 'link';
 }

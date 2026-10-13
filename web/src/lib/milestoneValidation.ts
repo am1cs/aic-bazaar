@@ -15,6 +15,6 @@ export function createMilestoneValidator(load?: Loader): Validator {
   };
 }
 
-// An absent partner module must fail before hashing or signing, not bypass checks.
-const modules = import.meta.glob<MediaModule>('./media.ts');
-export const validateMilestoneFile = createMilestoneValidator(modules['./media.ts']);
+// The agreed partner module is now published. A direct import makes its presence
+// a build requirement; no format check is duplicated or bypassed here.
+export const validateMilestoneFile = createMilestoneValidator(() => import('./media'));
