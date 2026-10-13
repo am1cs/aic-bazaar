@@ -1,6 +1,6 @@
 # Part 1 status
 
-Status: IMPLEMENTED — human Devnet flows verified; assigned wallet/media fixes ready for frontend integration and review.
+Status: INTEGRATED AND VERIFIED — combined frontend passes; final Vercel deployment in progress.
 Owner: @am1cs (macOS).
 Branch: codex/part-1-contract-sdk.
 
@@ -24,8 +24,29 @@ Branch: codex/part-1-contract-sdk.
 The human explicitly assigned part 1 the wallet provider, new shared frontend
 media validator/tests, Devnet verification and Vercel publication. Part 2 still
 owns delivery/preview/receipt/dispute UI and calls the validator before hashing.
-Integrate both participants' fixes, repeat with real delivery links, then publish
-the combined build. Contract, SDK and financial semantics remain unchanged.
+Both participants' fixes are now integrated. Publish the combined build and repeat
+human media/Phantom acceptance on the stable origin. Contract, SDK and financial
+semantics remain unchanged.
+
+## Combined integration checkpoint — 2026-10-13
+
+- Fast-forwarded the clean part 1 checkout to main 43bb816, including the merged
+  part 2 delivery/preview/receipt/dispute corrections and actual media validator.
+- Fixed the remaining macOS/Linux regression: explicit Windows separator
+  normalization in transportBridgePlugin.ts. Exact SDK import boundary is retained;
+  an additional regression test covers native Windows configured paths.
+- All 380 frontend tests in 16 files passed; TypeScript and production build passed
+  (308 modules; index-DezR0FXm.js plus the real media-BZCQrnPf.js validator chunk).
+- All four actual read-only Devnet SDK/preflight checks passed. No signatures or
+  transactions were requested by this integration verification.
+- Added an explicit Vercel SPA rewrite for /demo/materials, which otherwise falls
+  under the existing /demo/ static-file exclusion. Missing demo assets stay 404.
+- Independent code review confirmed validator-before-hash ordering, stale result
+  cancellation and preserved pending/unknown operation locks; financial code unchanged.
+- Current GitHub contributors API lists only am1cs and destinesia7187. No unwanted
+  author/committer/coauthor metadata remains in branch history. The GitHub sidebar
+  still shows its previous three-person cache; no new history rewrite is needed.
+- Final Vercel publication and hosted media playback verification are in progress.
 
 ## Assigned frontend fixes — 2026-10-13
 
