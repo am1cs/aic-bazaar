@@ -235,6 +235,11 @@ describe('transport import boundary', () => {
     expect(plugin.resolveId('./transport', 'C:\\project\\sdk\\src\\index.ts')).toBe('C:/project/web/src/sdkTransportBridge.ts');
     expect(plugin.resolveId('./transport', 'C:/project/sdk/src/index.ts?test')).toBe('C:/project/web/src/sdkTransportBridge.ts');
   });
+  it('normalizes native Windows separators in configured paths on every host', () => {
+    const native = transportBridgePlugin({ sdkEntry: String.raw`C:\project\sdk\src\index.ts`, bridge: String.raw`C:\project\web\src\sdkTransportBridge.ts` });
+    expect(native.resolveId('./transport', String.raw`C:\project\sdk\src\index.ts?test`)).toBe('C:/project/web/src/sdkTransportBridge.ts');
+    expect(native.resolveId('./transport', String.raw`C:\other\sdk\src\index.ts`)).toBeNull();
+  });
   it.each([
     ['./transport', 'C:/project/web/src/sdkTransportBridge.ts'],
     ['./transport', 'C:/other/sdk/src/index.ts'],
