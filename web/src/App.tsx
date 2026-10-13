@@ -4,6 +4,7 @@ import { Header } from './Header';
 import Home from './Home';
 import Create from './Create';
 import DealPage from './DealPage';
+import DeliveryCheck from './DeliveryCheck';
 import OperationPanel from './OperationPanel';
 import { useOperation } from './transactions/useOperation';
 import { External } from './components';
@@ -33,6 +34,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home/>}/><Route path="/create" element={<Create/>}/>
         <Route path="/deal/:address" element={<DealPage/>}/><Route path="/deal/:address/dispute" element={<DealPage disputeOnly/>}/>
+        <Route path="/demo/materials" element={<DeliveryCheck/>}/>
         <Route path="*" element={<section className="empty-state"><h1>Page not found</h1><Link className="button primary" to="/">Back to AIC Bazaar</Link></section>}/>
       </Routes>
     </main>

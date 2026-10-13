@@ -1,6 +1,6 @@
 # Part 2 status
 
-Status: IMPLEMENTED — local validation passed; human Phantom acceptance pending.
+Status: INTERFACE CORRECTIONS IMPLEMENTED — uncommitted for review; partner media validator integration pending. User reports successful Devnet completion and refund.
 Owner: @destinesia7187 (Windows).
 Branch: codex/part-2-web.
 
@@ -11,9 +11,9 @@ Branch: codex/part-2-web.
 - Phantom adapter, public wallet-free reads, participant permissions, exact BigInt amounts, local SHA-256, revision guards, explicit reviews and three settlement calculations implemented.
 - Operation controller prevents overlapping mutations. Confirmed, failed and unknown receipts are distinct; unknown outcomes cannot be dismissed or automatically repeated. Creation reviews are consumed before signing and cannot reactivate after recovered confirmation.
 - TypeScript passed, including SDK source, verification checks and Vite configurations.
-- 287 controlled frontend tests passed in 12 files: validation, money, permissions, hashing, async route/wallet/stage changes, operation recovery, creation, receipt feedback, accessibility and motion safeguards. Twelve creation cases cover selected arbiters, duplicate/invalid addresses, draft migration and review invalidation; 33 additional cases cover Phantom transaction preparation and the genuine SDK's financial guards.
+- 331 controlled frontend tests passed in 14 files, including URL preview/failure/replacement states, expandable receipts/dispute controls, validator-before-hash ordering and preserved operation locks. Financial and Phantom encoding guards remain covered.
 - Four actual read-only Devnet checks passed: completed deal, resolved/refund deal, exact public asset hashes against completed on-chain submissions, and a fresh real SDK create simulation that intentionally stops before signing or submission.
-- Latest production build passed: 304 modules, JavaScript 985.31 kB / 295.83 kB gzip, CSS 66.30 kB / 14.49 kB gzip.
+- Latest production build passed: 307 modules, JavaScript 991.39 kB / 297.55 kB gzip, CSS 67.91 kB / 14.84 kB gzip.
 - Clean clone of implementation commit 05cb977: `npm ci` and `npm run build` passed without installing or editing sibling SDK dependencies; Git working tree stayed clean. All three demo hashes remained exact after checkout on Windows.
 - Baseline Chrome browser QA: 360 px Home/Create/completed deal, 768 px Home/Create, and 1440 px Home/resolved dispute. No horizontal page overflow. Invalid deal addresses show accessible feedback. Direct dispute reload works without a wallet. Navigation from the lower gallery opens a deal at the top.
 - Latest in-app browser QA: 360, 835 and 1440 px Home; no horizontal overflow. Main copy is 16 px desktop, 15.2 px tablet and 14.4 px mobile; the network note is 12 px. Sticky navigation has real destinations, mobile Tab enters the menu and Escape restores its trigger. Hash navigation focuses its heading below the sticky header (104 px heading offset against an 89 px header on desktop).
@@ -41,10 +41,11 @@ Demo walkthrough: docs/demo.md. Human acceptance plan and agent QA: docs/usabili
 
 ## Remaining acceptance
 
-- Real human Phantom signing from this frontend: create, accept, submissions/replacement, approvals, cancellation and all settlement outcomes. Showing part 1's existing deals is not a substitute.
+- The user reports a successful Devnet deal and a refund dispute. Further transaction verification, including other settlement outcomes, belongs to the partner for this checkpoint; no new transaction was signed or submitted by this agent.
 - Two human usability sessions and a product-demo recording.
-- Vercel publication and hosted direct-route checks, deferred by the user.
-- Peer review of the follow-up Phantom correction before another merge to main.
+- Partner publishes the shared `web/src/lib/media.ts` validator, then integrate and verify the actual module before releasing submission functionality.
+- Partner restores Phantom connection and handles Vercel after the corrections are combined.
+- A separate interface-correction PR remains pending; the user requested no immediate commit and these changes are intentionally uncommitted for review.
 
 Recovery limitation: reloading before the SDK returns a signature requires manual wallet/Explorer verification. An uncertain creation does not expose its generated deal address through the SDK error; confirmed recovery explains how to find it in Explorer.
 
@@ -55,3 +56,15 @@ Dependency audit after the scoped bn.js patch reports 27 findings (15 high, 12 m
 The user reported `The wallet changed the transaction message. Nothing was submitted.` after creating a deal. The original SDK failure was reproduced with a controlled signer implementing Phantom's documented auto-addition of priority-fee instructions. A web-owned preparation bridge now sets the existing default compute limit (200,000 CU) and zero priority fee before the genuine SDK's wire, fee, balance, simulation and message checks. A Vite resolver redirects only the exact SDK entry's transport import; SDK/contract/shared/deployment files remain unchanged. Unexpected original instruction layouts and signatures fail before RPC/signing. Wallet changes to payer, recipient, instruction data, blockhash, fee or added instructions still reject without broadcasting; missing/invalid signatures, size, balance, simulation, confirmation and unknown-result recovery retain their original guards.
 
 Validation: 287 controlled tests, TypeScript, production build, and four live Devnet checks passed. The live create used only a funded public address and threw an intentional signing-stop error after successful simulation; no key was read, no signature produced and no transaction sent. Public HTTPS /create loaded the new `/assets/index-XZr3LQp4.js` bundle, its deployment readiness check passed, and the browser reported zero console errors. Both loopback production preview and the existing Cloudflare tunnel remain running. The user's actual next Phantom signature and successful create receipt are pending; these tests do not claim a completed human wallet transaction.
+
+## Delivery interface checkpoint — 2026-10-13
+
+Started on clean `codex/part-2-web`; fetched origin and fast-forwarded to origin/main 318cb00, which includes merged PR #3. No commit/push/PR was created for these new corrections. Partner-owned `web/src/providers.tsx`, `web/src/lib/media.ts` and its tests, contract, SDK, deployment, shared types and financial rules were not edited.
+
+The submission form now explains `Host your file → Paste its delivery link → Select the same file`, uses Delivery link / Select the same delivered file labels, explains that selection does not upload, and exposes a safe Open delivery link before submission. Changing the delivery link clears the old fingerprint and selection. `lib/milestoneValidation.ts` is integration glue, not a second validator: it loads only the partner's agreed `validateMilestoneFile(file, index): Promise<void>` export. With the module absent, selecting a file fails visibly before hashing or signing. Current error text says file checks are temporarily unavailable. The partner has not committed that module yet, as confirmed by the human.
+
+Saved on-chain delivery URLs render native image previews or MP4 players with controls; other links remain external. Failed media retain an external link with an accessible message. No local creator file is exposed to another user, no HTML injection, new file storage or marketplace was added. Receipts show a concise outcome with addresses/signature under Technical details; pending/unknown warnings and recovery remain visible and locked. Dispute forms open via Open dispute; payment/arbiter amount confirmations remain unchanged. Chain state supplies the next step, including Concept paid / waiting for Draft.
+
+Actual automated validation: `npm test` passed 331 tests / 14 files; `npm run build` passed TypeScript and production compilation. Independent static review found no blocker. Actual local Chrome over the public HTTPS tunnel: direct completed-deal URL loaded real Devnet state without a wallet; old GitHub blob-page links correctly fell back to external links. The separate `/demo/materials` check uses the same preview component and existing unchanged `/demo/concept.svg`, `draft.mp4`, `final.mp4`; its image decoded to 1080×760, both videos loaded with controls and duration 15s, and actual keyboard playback advanced Draft to 5.51s and Final to 11.44s. The intentionally missing file showed an error while preserving Open delivery link. No horizontal page overflow was observed on the desktop check.
+
+Two-computer acceptance was requested with the exact public check/deal links; the human replied “мы все тест делали все было идеально”. This is recorded as human-reported results, not direct observation of the second computer. No new real file submission can be verified until the partner's validator arrives. Updated test site: https://americans-gardening-banners-keep.trycloudflare.com/demo/materials. Public preview and tunnel must remain running. Partner owns final Vercel deployment; no hackathon submission was made.
