@@ -1,8 +1,9 @@
 {
   "origin": "https://aic-bazaar.vercel.app",
-  "sourceCommit": "0a7cd8420860df289c0bb0fcb7f578f5e49a587c",
-  "verifiedAt": "2026-10-13T02:19:33.495Z",
-  "phase": "first deployment; delivery UI integration and peer review pending",
+  "sourceCommit": "723a6c4dd62c7b33705fd5d8befd40035c03bcf0",
+  "deploymentId": "dpl_GnFemnWPNmEaKj2jFYuspNyBFEMj",
+  "verifiedAt": "2026-10-13T03:10:33.000Z",
+  "phase": "combined production deployment",
   "publicWithoutVercelLogin": true,
   "checks": [
     {
@@ -10,7 +11,7 @@
       "status": 200,
       "contentType": "text/html; charset=utf-8",
       "bytes": 643,
-      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "sha256": "7a64447eb500009811e32545a0c971f394df4508bcf01cee1668b002808b090a",
       "matchesLocal": null
     },
     {
@@ -18,7 +19,15 @@
       "status": 200,
       "contentType": "text/html; charset=utf-8",
       "bytes": 643,
-      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "sha256": "7a64447eb500009811e32545a0c971f394df4508bcf01cee1668b002808b090a",
+      "matchesLocal": null
+    },
+    {
+      "path": "/demo/materials",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 643,
+      "sha256": "7a64447eb500009811e32545a0c971f394df4508bcf01cee1668b002808b090a",
       "matchesLocal": null
     },
     {
@@ -26,7 +35,7 @@
       "status": 200,
       "contentType": "text/html; charset=utf-8",
       "bytes": 643,
-      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "sha256": "7a64447eb500009811e32545a0c971f394df4508bcf01cee1668b002808b090a",
       "matchesLocal": null
     },
     {
@@ -34,7 +43,7 @@
       "status": 200,
       "contentType": "text/html; charset=utf-8",
       "bytes": 643,
-      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "sha256": "7a64447eb500009811e32545a0c971f394df4508bcf01cee1668b002808b090a",
       "matchesLocal": null
     },
     {
@@ -78,43 +87,79 @@
       "matchesLocal": true
     },
     {
-      "path": "/assets/index-DuaBCOVZ.js",
+      "path": "/assets/index-DezR0FXm.js",
       "status": 200,
       "contentType": "application/javascript; charset=utf-8",
-      "bytes": 985532,
-      "sha256": "d6a046020f714fae5b4f155129c425d9a666c79f3c8ba08e3afe6c4fbc93b518",
+      "bytes": 991685,
+      "sha256": "36def2c32ec6c3b10ff611cc9a513fb8505b7b08b2116c0f80162da692f4e7e5",
       "matchesLocal": true
     },
     {
-      "path": "/assets/index-BMVpYNNk.css",
+      "path": "/assets/media-BZCQrnPf.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "bytes": 4828,
+      "sha256": "dd3e1b7f5f81438c2ddc5e3ff13b1319cb54904ffed7195e28ad67f1ee587aa9",
+      "matchesLocal": true
+    },
+    {
+      "path": "/assets/index-ZzGnkvoy.css",
       "status": 200,
       "contentType": "text/css; charset=utf-8",
-      "bytes": 66302,
-      "sha256": "1cf502a970098183f06a95a6fd8f31e29b0f0bf81ff8c22654fc992e88f55dcd",
+      "bytes": 67919,
+      "sha256": "389c0915ed9551ea976ca855c086930201034e822010617fa3d5078f890d5a64",
       "matchesLocal": true
     }
   ],
+  "missingDemoAsset": {
+    "status": 404
+  },
   "videoRange": {
     "status": 206,
     "contentRange": "bytes 0-31/62288"
   },
   "browserAcceptance": {
-    "homeLoaded": true,
     "completedHumanDealReloaded": true,
     "refundHumanDealDisputeReloaded": true,
     "createLoaded": true,
     "createDeploymentCheckCompleted": true,
-    "consoleErrors": 0,
+    "conceptImage": {
+      "naturalWidth": 1080,
+      "naturalHeight": 760,
+      "decoded": true
+    },
+    "draftPlayback": {
+      "durationSeconds": 15,
+      "playedToSeconds": 15,
+      "ended": true,
+      "error": null
+    },
+    "finalPlayback": {
+      "durationSeconds": 15,
+      "playedToSeconds": 15,
+      "ended": true,
+      "error": null
+    },
+    "missingPreviewErrorAndExternalLinkVisible": true,
+    "rememberedPhantomRestoredAfterReload": true,
     "walletSigning": "not performed",
-    "livePhantomReload": "requires human check after connecting to the new origin"
+    "consoleErrors": 0,
+    "desktopHorizontalOverflow": false
   },
-  "uploadedFileAudit": {
-    "filesAndDirectories": 158,
-    "forbiddenPaths": []
-  },
-  "deploymentId": "dpl_CKYoHHJLtUFYJ51oN4314YXPcf5A",
   "projectId": "prj_qB5UL7caoGcDawlngUX0pOatWBbF",
   "rootDirectory": "web",
   "sourceFilesOutsideRootDirectory": true,
-  "nodeVersion": "24.x"
+  "nodeVersion": "24.x",
+  "uploadedFileAudit": {
+    "filesAndDirectories": 164,
+    "forbiddenPaths": []
+  },
+  "gitHubContributors": {
+    "authoritativeLogins": [
+      "am1cs",
+      "destinesia7187"
+    ],
+    "sidebarCacheStillShowsOldIdentity": true,
+    "historyMetadataCorrected": true
+  }
 }
