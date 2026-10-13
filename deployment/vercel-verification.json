@@ -1,0 +1,120 @@
+{
+  "origin": "https://aic-bazaar.vercel.app",
+  "sourceCommit": "0a7cd8420860df289c0bb0fcb7f578f5e49a587c",
+  "verifiedAt": "2026-10-13T02:19:33.495Z",
+  "phase": "first deployment; delivery UI integration and peer review pending",
+  "publicWithoutVercelLogin": true,
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 643,
+      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "matchesLocal": null
+    },
+    {
+      "path": "/create",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 643,
+      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "matchesLocal": null
+    },
+    {
+      "path": "/deal/qQHGbT4YgPGArdtPX3wLjVc5fWSrzSSkCHSM4FpAmnV",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 643,
+      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "matchesLocal": null
+    },
+    {
+      "path": "/deal/FtFChaQZEEdPuTnkVeXGxk4JHE5fku6u3qicVN4hyz7b/dispute",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 643,
+      "sha256": "348775ec02a97ec4a03391ca1d7e730931cfa87a2e6b38fd5f43db48548f5eae",
+      "matchesLocal": null
+    },
+    {
+      "path": "/previews/glow-concept.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 3401,
+      "sha256": "4d8ce052e5062fcb2b12d2131fb67392fc9901f2fec74fa44a1ae2ec84820cb5",
+      "matchesLocal": null
+    },
+    {
+      "path": "/frames/frame-01.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 873,
+      "sha256": "d3bf793467a50d82238d2a17a2d27ec57669caab8ee5c8d0863a75377da2d2c5",
+      "matchesLocal": null
+    },
+    {
+      "path": "/demo/concept.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 2544,
+      "sha256": "a8a038a29b73680836d2ad7664298603760f7b2f39a234b008f79153bfab1097",
+      "matchesLocal": true
+    },
+    {
+      "path": "/demo/draft.mp4",
+      "status": 200,
+      "contentType": "video/mp4",
+      "bytes": 62288,
+      "sha256": "c38cc90894fa4562841bfa63f9eba3229b9a48d5c98622d9e07dcdcd4e360734",
+      "matchesLocal": true
+    },
+    {
+      "path": "/demo/final.mp4",
+      "status": 200,
+      "contentType": "video/mp4",
+      "bytes": 53866,
+      "sha256": "7c43d2efe180c9053abf312ec1adeee61cbad742b6583d53a6af429cac27d1a0",
+      "matchesLocal": true
+    },
+    {
+      "path": "/assets/index-DuaBCOVZ.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8",
+      "bytes": 985532,
+      "sha256": "d6a046020f714fae5b4f155129c425d9a666c79f3c8ba08e3afe6c4fbc93b518",
+      "matchesLocal": true
+    },
+    {
+      "path": "/assets/index-BMVpYNNk.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8",
+      "bytes": 66302,
+      "sha256": "1cf502a970098183f06a95a6fd8f31e29b0f0bf81ff8c22654fc992e88f55dcd",
+      "matchesLocal": true
+    }
+  ],
+  "videoRange": {
+    "status": 206,
+    "contentRange": "bytes 0-31/62288"
+  },
+  "browserAcceptance": {
+    "homeLoaded": true,
+    "completedHumanDealReloaded": true,
+    "refundHumanDealDisputeReloaded": true,
+    "createLoaded": true,
+    "createDeploymentCheckCompleted": true,
+    "consoleErrors": 0,
+    "walletSigning": "not performed",
+    "livePhantomReload": "requires human check after connecting to the new origin"
+  },
+  "uploadedFileAudit": {
+    "filesAndDirectories": 158,
+    "forbiddenPaths": []
+  },
+  "deploymentId": "dpl_CKYoHHJLtUFYJ51oN4314YXPcf5A",
+  "projectId": "prj_qB5UL7caoGcDawlngUX0pOatWBbF",
+  "rootDirectory": "web",
+  "sourceFilesOutsideRootDirectory": true,
+  "nodeVersion": "24.x"
+}

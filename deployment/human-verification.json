@@ -1,0 +1,439 @@
+{
+  "cluster": "devnet",
+  "verifiedAt": "2026-10-13T02:12:56.549Z",
+  "rpcUrl": "https://api.devnet.solana.com",
+  "programId": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+  "readOnly": true,
+  "discovery": {
+    "performed": true,
+    "method": "program accounts filtered by client and creator",
+    "addresses": [
+      "qQHGbT4YgPGArdtPX3wLjVc5fWSrzSSkCHSM4FpAmnV",
+      "FtFChaQZEEdPuTnkVeXGxk4JHE5fku6u3qicVN4hyz7b"
+    ],
+    "newerThanKnownHumanDeals": []
+  },
+  "successfulReceiptsChecked": 15,
+  "scope": "Public account state, complete bounded receipt history, required signers, integer obligations and transaction balance deltas. No wallet signing, UI acceptance, file delivery or media-content validation.",
+  "deals": [
+    {
+      "address": "qQHGbT4YgPGArdtPX3wLjVc5fWSrzSSkCHSM4FpAmnV",
+      "owner": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+      "readContextSlot": 510470615,
+      "client": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+      "creator": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+      "arbiter": "DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR",
+      "title": "TEST — Successful delivery",
+      "createdAt": "2026-10-13T01:03:54.000Z",
+      "status": "completed",
+      "resolutionOutcome": null,
+      "budgetLamports": "10000000",
+      "bondLamports": "1000000",
+      "remainingBudgetLamports": "0",
+      "lockedBondLamports": "0",
+      "rentReserveLamports": "10322560",
+      "accountBalanceLamports": "10322560",
+      "unsolicitedExcessLamports": "0",
+      "milestones": [
+        {
+          "index": 0,
+          "amountLamports": "2000000",
+          "revision": 1,
+          "paidAt": "2026-10-13T01:09:05.000Z",
+          "submission": {
+            "url": "https://americans-gardening-banners-keep.trycloudflare.com/",
+            "sha256": "51e488bd71dfb4f061b2d4accdbbe96a5aec7dcaf6e8720346d5406954968cae",
+            "submittedAt": "2026-10-13T01:07:19.000Z"
+          }
+        },
+        {
+          "index": 1,
+          "amountLamports": "3000000",
+          "revision": 2,
+          "paidAt": "2026-10-13T01:14:17.000Z",
+          "submission": {
+            "url": "https://explorer.solana.com/",
+            "sha256": "c0c5f11c0cda3f03994491c7949f16b853588e70fc056056f7f72935e19aa316",
+            "submittedAt": "2026-10-13T01:13:43.000Z"
+          }
+        },
+        {
+          "index": 2,
+          "amountLamports": "5000000",
+          "revision": 1,
+          "paidAt": "2026-10-13T01:16:45.000Z",
+          "submission": {
+            "url": "https://www.allitworksout.com/aicbazaar",
+            "sha256": "e680facd20c214002b446e9bec745fd0f6f0b2c69c30ff4f212618ab6ef87198",
+            "submittedAt": "2026-10-13T01:16:02.000Z"
+          }
+        }
+      ],
+      "transactions": [
+        {
+          "signature": "3jrmhqqyJd6tYGwtUfJs2b7cKbyhiVfs2Xp9tB2w86ZyjDpBjYhNBY3cfCtiQMgwHDbQf6kGe88gEtfAfRsbtW3m",
+          "slot": 510453403,
+          "blockTime": "2026-10-13T01:03:54.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "createDeal",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-20327560",
+          "creatorDeltaLamports": "0",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "20322560"
+        },
+        {
+          "signature": "mFbJZksHxwnV2ZGXEBK9ZEJWubMRtRgmXGt4y2FhLhwGt8SKq8uGjd9hZtFyrQFUDEqCLCVLnzpLcpvqbGyvJ5K",
+          "slot": 510453944,
+          "blockTime": "2026-10-13T01:06:03.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "acceptDeal",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-1005000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "1000000"
+        },
+        {
+          "signature": "3P8GpoC3PvTtgcR2EzY1LV2rKtH5Z4P12W4hje6V5c25pYry6Yb8XRuGnJDZnVv2TtqstBRyfR26pD1DasXanByX",
+          "slot": 510454262,
+          "blockTime": "2026-10-13T01:07:19.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "submitMilestone",
+          "milestoneIndex": 0,
+          "expectedRevision": 0,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-5000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "23uYTVnvehGbopbFmzR7jpM2NaEx966kCCkgeaUTRSPzh1d1APBGkPA7gC8eUyGUe27NaCftP5Ywa97o3oXFqxCf",
+          "slot": 510454702,
+          "blockTime": "2026-10-13T01:09:05.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "approveMilestone",
+          "milestoneIndex": 0,
+          "expectedRevision": 1,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-5000",
+          "creatorDeltaLamports": "2000000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "-2000000"
+        },
+        {
+          "signature": "48kJdd45QCt4tf46GjqPepQDuXVoLFUTtr9zPMRUz3PEjoZMuqTCZkK1W92mNBJrfs7ZfuLdNgD2NzrUgF9pRa8c",
+          "slot": 510455290,
+          "blockTime": "2026-10-13T01:11:26.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "submitMilestone",
+          "milestoneIndex": 1,
+          "expectedRevision": 0,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-5000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "RddytqemzRDsvUtYRh5hDNzc67PeRkz5rcckVPaPWvYaU25Jazwy2gN4scrWe9iZRUxo7mgpx1TVAFzRK1prBVv",
+          "slot": 510455865,
+          "blockTime": "2026-10-13T01:13:43.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "submitMilestone",
+          "milestoneIndex": 1,
+          "expectedRevision": 1,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-5000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "4QpXasLjXiqGYFCFR8qLQGZsE8YWw92W1TuGg2RJFzi25EEYQRHbb4QseWMdndGSjn75VXFKgWVRBLVjs4bDbmkB",
+          "slot": 510456009,
+          "blockTime": "2026-10-13T01:14:17.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "approveMilestone",
+          "milestoneIndex": 1,
+          "expectedRevision": 2,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-5000",
+          "creatorDeltaLamports": "3000000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "-3000000"
+        },
+        {
+          "signature": "4woKVYdtsAhVti1T3fRsfV1Lxi6J7whPVQMenZYTx7bqqogGVTySmBwyfWwEPar6MCGZWUpR3L7SCEjpqUTScz11",
+          "slot": 510456450,
+          "blockTime": "2026-10-13T01:16:02.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "submitMilestone",
+          "milestoneIndex": 2,
+          "expectedRevision": 0,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-5000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "3abwgQPAdgeZDMS1DbinkLhgrxhXJbE9N4yX24umy6AGYaMq82Q17v11VbGXPfFDNvzyyHYBbQW6yM3Db2u1XLDz",
+          "slot": 510456630,
+          "blockTime": "2026-10-13T01:16:45.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "approveMilestone",
+          "milestoneIndex": 2,
+          "expectedRevision": 1,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-5000",
+          "creatorDeltaLamports": "6000000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "-6000000"
+        }
+      ]
+    },
+    {
+      "address": "FtFChaQZEEdPuTnkVeXGxk4JHE5fku6u3qicVN4hyz7b",
+      "owner": "8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX",
+      "readContextSlot": 510470665,
+      "client": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+      "creator": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+      "arbiter": "DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR",
+      "title": "Test - FILM 7 Robbers ",
+      "createdAt": "2026-10-13T01:23:09.000Z",
+      "status": "resolved",
+      "resolutionOutcome": "refund",
+      "budgetLamports": "20000000",
+      "bondLamports": "2000000",
+      "remainingBudgetLamports": "0",
+      "lockedBondLamports": "0",
+      "rentReserveLamports": "10322560",
+      "accountBalanceLamports": "10322560",
+      "unsolicitedExcessLamports": "0",
+      "milestones": [
+        {
+          "index": 0,
+          "amountLamports": "4000000",
+          "revision": 1,
+          "paidAt": "2026-10-13T01:26:01.000Z",
+          "submission": {
+            "url": "https://robotsrobots.com",
+            "sha256": "aab5331dfff7f21c0c08b9d0e74709fadcfbb42b7cd134f0184b4f7255bf4d95",
+            "submittedAt": "2026-10-13T01:25:45.000Z"
+          }
+        },
+        {
+          "index": 1,
+          "amountLamports": "6000000",
+          "revision": 0,
+          "paidAt": null,
+          "submission": null
+        },
+        {
+          "index": 2,
+          "amountLamports": "10000000",
+          "revision": 0,
+          "paidAt": null,
+          "submission": null
+        }
+      ],
+      "transactions": [
+        {
+          "signature": "54L5W4sF69D3KF1EiMKoUh6qGf2yYEz7N5Mwqj6qf31hKHCZ9CZJYWdzEwAJ8Kkjs5u7Zik7Rme8ru7U1Qe9wPhQ",
+          "slot": 510458240,
+          "blockTime": "2026-10-13T01:23:09.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "createDeal",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-30327560",
+          "creatorDeltaLamports": "0",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "30322560"
+        },
+        {
+          "signature": "2gCbeusdaWJCobfv6Ngg5z96kuzwFwhutAwSZqD3hc63DhygT4ZFQkGxxvNmuFBmcuuE9fd8rZyvK8iC5e3NGYLr",
+          "slot": 510458652,
+          "blockTime": "2026-10-13T01:24:48.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "acceptDeal",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-2005000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "2000000"
+        },
+        {
+          "signature": "3HckbySpZp2qFLwDpH4XChbH9NLGuoCy9d28U2WBHdgg2FZ1U3pMWTns2ncHJKo6Kj7wnTGrcG97T47Eoh6rbUp",
+          "slot": 510458891,
+          "blockTime": "2026-10-13T01:25:45.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "submitMilestone",
+          "milestoneIndex": 0,
+          "expectedRevision": 0,
+          "outcome": null,
+          "signingRole": "creator",
+          "signers": [
+            "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W"
+          ],
+          "feePayer": "8Et821ouFKAf9nLgGgXZmRQNZ1LGGN7sLvMD8VTXp18W",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "0",
+          "creatorDeltaLamports": "-5000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "2JmzA9oGfQbRoLZZjQaz14fyLg8d3EWQW2qihWoyTNpHLT3H6SMa6QE9yqK7gNwQzhES14XhGj5HdGuCrZD1zXNa",
+          "slot": 510458960,
+          "blockTime": "2026-10-13T01:26:01.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "approveMilestone",
+          "milestoneIndex": 0,
+          "expectedRevision": 1,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-5000",
+          "creatorDeltaLamports": "4000000",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "-4000000"
+        },
+        {
+          "signature": "4abCMsJuY6EZwHVekziTkeCiRYkUABR64cgAtMkPQZsfyzozS1yFzoPgzvQ1mZReRzpsw5y91yDy3j62gzjCXHBX",
+          "slot": 510459131,
+          "blockTime": "2026-10-13T01:26:42.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "openDispute",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": null,
+          "signingRole": "client",
+          "signers": [
+            "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4"
+          ],
+          "feePayer": "RoBbvk9K1mKvpn8HymvYFb46386YRUFqhUfTrjo2TT4",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "-5000",
+          "creatorDeltaLamports": "0",
+          "arbiterDeltaLamports": "0",
+          "escrowDeltaLamports": "0"
+        },
+        {
+          "signature": "mHDATX4xgMe3jBfcZdtmUN84jkqRzKj5YzjpSVhiEYJtAAw7m5d3kmRs4QtzD5RbvoVBSXmPWmb9dYyDMwXkw5q",
+          "slot": 510459900,
+          "blockTime": "2026-10-13T01:29:46.000Z",
+          "confirmationStatus": "finalized",
+          "successful": true,
+          "operation": "resolveDispute",
+          "milestoneIndex": null,
+          "expectedRevision": null,
+          "outcome": "refund",
+          "signingRole": "arbiter",
+          "signers": [
+            "DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR"
+          ],
+          "feePayer": "DPrNTxjQ7eEiHFp8uszufwEc9jUhZxJ51ZN8JisqrVqR",
+          "feeLamports": "5000",
+          "clientDeltaLamports": "16000000",
+          "creatorDeltaLamports": "2000000",
+          "arbiterDeltaLamports": "-5000",
+          "escrowDeltaLamports": "-18000000"
+        }
+      ]
+    }
+  ]
+}
