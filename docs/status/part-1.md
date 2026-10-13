@@ -44,14 +44,27 @@ the combined build. Contract, SDK and financial semantics remain unchanged.
 - These checks do not decode media, assess quality/duration/resolution, verify
   remote delivery contents, upload files or replace client review.
 - Forty-one scoped tests passed. TypeScript and production build passed.
+  Full suite: 327 passed, one failed; four live frontend SDK/preflight checks passed.
 - Full suite found one existing cross-platform failure from main in
   sdkTransportBridge.test.ts: the Windows importer string is not normalized on
   macOS/Linux by Vite normalizePath. Part 2 must normalize backslashes explicitly
   in transportBridgePlugin.ts before normalizePath; root did not edit that file.
 - Vercel CLI installed in ignored .local and authenticated by the human.
   Project aic-bazaar created in the human's amanbekov10-4248s-projects scope.
-  Publication and hosted acceptance are not yet claimed. Upload only clean,
-  committed source; the working checkout contains ignored private-key files.
+  Root Directory web, sibling sources enabled, Node 24.x, npm ci/build, dist.
+- First Vercel deployment of commit 0a7cd84 is live at
+  https://aic-bazaar.vercel.app. Vercel automatically assigned the first build to
+  production. This is the root checkpoint, not the combined final UX version:
+  part 2 must still integrate the validator and deliver its preview/form fixes.
+- All eleven HTTP route/asset checks passed; hosted JS/CSS/demo bytes match local
+  build hashes, image/video content types are correct, MP4 range requests return 206.
+- Actual Chrome checks passed without a wallet: Home, Create, direct completed
+  human deal reload and refund-dispute route reload; no console errors observed.
+- The deployment uploaded a clean Git archive. Audited 158 remote file/directory
+  paths: no .local, .env, keypair/deployer key files or node_modules were uploaded.
+- Public evidence: deployment/vercel-verification.json. Live Phantom reconnect
+  on the new origin and actual media submission remain human acceptance steps.
+  Root PR: https://github.com/am1cs/aic-bazaar/pull/4; not merged pending peer review.
 
 ## Repeatable human Devnet verification — 2026-10-13
 
@@ -135,16 +148,18 @@ Evidence: deployment/verification.json and docs/technical.md.
 
 ## Blockers
 
-No blocker remains for part 1. The RPC faucet failure was resolved by the human
+Contract/SDK deployment has no remaining blocker. The RPC faucet failure was resolved by the human
 funding the dedicated Devnet deployer. Public RPC calls are paced to avoid rate
 limits. One setup demo had an incorrect asset commit reference and was retired
 through the actual dispute/refund path; its receipts are preserved separately.
 
-Web/SDK integration and its automated/read-only checks passed. The reported human
-successful Phantom flow and refund dispute are confirmed by real Devnet receipts.
-Other settlement outcomes and cancellation acceptance, actual material delivery, browser inspection of the
-supplied site, product-demo recording, founder-name verification, pitch recording
-and final hackathon submission remain joint/part 2 work. The temporary Cloudflare preview depends on the other
-participant's running computer and tunnel; a stable deployment remains pending.
+The reported human successful Phantom flow and refund dispute are confirmed by
+real Devnet receipts. The first stable Vercel build and its public/Chrome checks
+passed. The combined final version still needs part 2's validator integration,
+delivery/preview/receipt/dispute UX changes and cross-platform transport test fix,
+followed by peer review and deployment of the combined commit.
+Actual new-origin Phantom/media acceptance, other settlement outcomes/cancellation,
+product-demo recording, founder-name verification, pitch recording and final
+hackathon submission remain joint/part 2 work. No submission was performed.
 
 Update this file with verified results and remaining blockers at each checkpoint.
