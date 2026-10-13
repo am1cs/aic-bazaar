@@ -11,9 +11,9 @@ Branch: codex/part-2-web.
 - Phantom adapter, public wallet-free reads, participant permissions, exact BigInt amounts, local SHA-256, revision guards, explicit reviews and three settlement calculations implemented.
 - Operation controller prevents overlapping mutations. Confirmed, failed and unknown receipts are distinct; unknown outcomes cannot be dismissed or automatically repeated. Creation reviews are consumed before signing and cannot reactivate after recovered confirmation.
 - TypeScript passed, including SDK source, verification checks and Vite configurations.
-- 254 controlled frontend tests passed in 11 files: validation, money, permissions, hashing, async route/wallet/stage changes, operation recovery, creation, receipt feedback, accessibility and motion safeguards. Twelve additional creation cases cover selected arbiters, duplicate/invalid addresses, draft migration and review invalidation.
-- Three actual read-only Devnet checks passed: completed deal, resolved/refund deal, and exact public asset hashes against completed on-chain submissions.
-- Latest production build passed: 303 modules, JavaScript 984.86 kB / 295.68 kB gzip, CSS 66.27 kB / 14.48 kB gzip.
+- 287 controlled frontend tests passed in 12 files: validation, money, permissions, hashing, async route/wallet/stage changes, operation recovery, creation, receipt feedback, accessibility and motion safeguards. Twelve creation cases cover selected arbiters, duplicate/invalid addresses, draft migration and review invalidation; 33 additional cases cover Phantom transaction preparation and the genuine SDK's financial guards.
+- Four actual read-only Devnet checks passed: completed deal, resolved/refund deal, exact public asset hashes against completed on-chain submissions, and a fresh real SDK create simulation that intentionally stops before signing or submission.
+- Latest production build passed: 304 modules, JavaScript 985.31 kB / 295.83 kB gzip, CSS 66.30 kB / 14.49 kB gzip.
 - Clean clone of implementation commit 05cb977: `npm ci` and `npm run build` passed without installing or editing sibling SDK dependencies; Git working tree stayed clean. All three demo hashes remained exact after checkout on Windows.
 - Baseline Chrome browser QA: 360 px Home/Create/completed deal, 768 px Home/Create, and 1440 px Home/resolved dispute. No horizontal page overflow. Invalid deal addresses show accessible feedback. Direct dispute reload works without a wallet. Navigation from the lower gallery opens a deal at the top.
 - Latest in-app browser QA: 360, 835 and 1440 px Home; no horizontal overflow. Main copy is 16 px desktop, 15.2 px tablet and 14.4 px mobile; the network note is 12 px. Sticky navigation has real destinations, mobile Tab enters the menu and Escape restores its trigger. Hash navigation focuses its heading below the sticky header (104 px heading offset against an 89 px header on desktop).
@@ -36,7 +36,7 @@ Local preview: http://127.0.0.1:5173/; new deal: http://127.0.0.1:5173/create wh
 Public browser checks: Home, direct completed-deal and resolved-dispute routes loaded over HTTPS and fetched their real Devnet state; direct /create loaded. Production assets contain no Vite dev client, sourcemaps or key files. No human signing has been performed. Localhost drafts/receipts do not transfer to the public hostname; keep one URL/tab for each pending operation.
 SDK integration: actual part 1 source and deployed Devnet program.
 Program ID: 8ddYBcE1uxzxke9T9ivLqXN9gJiXNY5kGbNYwBfiqCgX.
-GitHub handoff — 2026-10-13: the user requested committing and pushing all project work to am1cs/aic-bazaar on codex/part-2-web. This checkpoint includes the frontend, SDK integration, working spec, validation notes and four supplied design-reference files. Local test-wallet private keys remain outside Git. Remote push verification is recorded in the chat. PR: not opened.
+GitHub handoff — 2026-10-13: the user requested committing and pushing all project work to am1cs/aic-bazaar on codex/part-2-web. The frontend, SDK integration, working spec, validation notes and four supplied design-reference files were pushed. PR #2 was merged by the owner at 2026-10-12T23:31:10Z; origin/main 341ee1f was fast-forwarded into our clean branch before the Phantom fix. Local test-wallet private keys remain outside Git. The follow-up compatibility correction requires a separate peer-reviewed PR.
 Demo walkthrough: docs/demo.md. Human acceptance plan and agent QA: docs/usability.md.
 
 ## Remaining acceptance
@@ -44,8 +44,14 @@ Demo walkthrough: docs/demo.md. Human acceptance plan and agent QA: docs/usabili
 - Real human Phantom signing from this frontend: create, accept, submissions/replacement, approvals, cancellation and all settlement outcomes. Showing part 1's existing deals is not a substitute.
 - Two human usability sessions and a product-demo recording.
 - Vercel publication and hosted direct-route checks, deferred by the user.
-- Peer review before merge to main.
+- Peer review of the follow-up Phantom correction before another merge to main.
 
 Recovery limitation: reloading before the SDK returns a signature requires manual wallet/Explorer verification. An uncertain creation does not expose its generated deal address through the SDK error; confirmed recovery explains how to find it in Explorer.
 
 Dependency audit after the scoped bn.js patch reports 27 findings (15 high, 12 moderate), largely propagated through Node/native tooling. Browser export paths were reviewed; no claim of zero vulnerabilities or mainnet readiness is made.
+
+## Phantom compatibility checkpoint — 2026-10-13
+
+The user reported `The wallet changed the transaction message. Nothing was submitted.` after creating a deal. The original SDK failure was reproduced with a controlled signer implementing Phantom's documented auto-addition of priority-fee instructions. A web-owned preparation bridge now sets the existing default compute limit (200,000 CU) and zero priority fee before the genuine SDK's wire, fee, balance, simulation and message checks. A Vite resolver redirects only the exact SDK entry's transport import; SDK/contract/shared/deployment files remain unchanged. Unexpected original instruction layouts and signatures fail before RPC/signing. Wallet changes to payer, recipient, instruction data, blockhash, fee or added instructions still reject without broadcasting; missing/invalid signatures, size, balance, simulation, confirmation and unknown-result recovery retain their original guards.
+
+Validation: 287 controlled tests, TypeScript, production build, and four live Devnet checks passed. The live create used only a funded public address and threw an intentional signing-stop error after successful simulation; no key was read, no signature produced and no transaction sent. Public HTTPS /create loaded the new `/assets/index-XZr3LQp4.js` bundle, its deployment readiness check passed, and the browser reported zero console errors. Both loopback production preview and the existing Cloudflare tunnel remain running. The user's actual next Phantom signature and successful create receipt are pending; these tests do not claim a completed human wallet transaction.
