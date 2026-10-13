@@ -3,6 +3,9 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!assets/|demo/|previews/|frames/|brand-mark.svg|hero-flow.svg|favicon.svg).*)", "destination": "/index.html" }],
+  "rewrites": [
+    { "source": "/demo/materials", "destination": "/index.html" },
+    { "source": "/((?!assets/|demo/|previews/|frames/|brand-mark.svg|hero-flow.svg|favicon.svg).*)", "destination": "/index.html" }
+  ],
   "headers": [{ "source": "/(.*)", "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }, { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }] }]
 }

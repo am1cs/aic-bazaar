@@ -39,6 +39,8 @@ semantics remain unchanged.
   (308 modules; index-DezR0FXm.js plus the real media-BZCQrnPf.js validator chunk).
 - All four actual read-only Devnet SDK/preflight checks passed. No signatures or
   transactions were requested by this integration verification.
+- Added an explicit Vercel SPA rewrite for /demo/materials, which otherwise falls
+  under the existing /demo/ static-file exclusion. Missing demo assets stay 404.
 - Independent code review confirmed validator-before-hash ordering, stale result
   cancellation and preserved pending/unknown operation locks; financial code unchanged.
 - Current GitHub contributors API lists only am1cs and destinesia7187. No unwanted
