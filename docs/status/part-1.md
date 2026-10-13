@@ -1,6 +1,6 @@
 # Part 1 status
 
-Status: INTEGRATED AND VERIFIED — combined frontend passes; final Vercel deployment in progress.
+Status: DEPLOYED AND VERIFIED — combined frontend published on the stable Vercel origin.
 Owner: @am1cs (macOS).
 Branch: codex/part-1-contract-sdk.
 
@@ -24,9 +24,9 @@ Branch: codex/part-1-contract-sdk.
 The human explicitly assigned part 1 the wallet provider, new shared frontend
 media validator/tests, Devnet verification and Vercel publication. Part 2 still
 owns delivery/preview/receipt/dispute UI and calls the validator before hashing.
-Both participants' fixes are now integrated. Publish the combined build and repeat
-human media/Phantom acceptance on the stable origin. Contract, SDK and financial
-semantics remain unchanged.
+Both participants' fixes are integrated and published. Continue final human
+submission/payment acceptance and record demo/pitch on the stable origin. Contract,
+SDK and financial semantics remain unchanged.
 
 ## Combined integration checkpoint — 2026-10-13
 
@@ -46,7 +46,18 @@ semantics remain unchanged.
 - Current GitHub contributors API lists only am1cs and destinesia7187. No unwanted
   author/committer/coauthor metadata remains in branch history. The GitHub sidebar
   still shows its previous three-person cache; no new history rewrite is needed.
-- Final Vercel publication and hosted media playback verification are in progress.
+- Integrated fixes merged through PR #6. Combined main commit 723a6c4 deployed to
+  https://aic-bazaar.vercel.app, deployment dpl_GnFemnWPNmEaKj2jFYuspNyBFEMj.
+- Thirteen public HTTP checks passed, including /demo/materials and the dynamically
+  loaded media validator chunk. Hosted code/demo hashes match the tested local build;
+  missing media remains 404 and MP4 range requests return 206.
+- Actual Chrome: Concept image decoded to 1080x760, both native MP4 players reached
+  the 15-second end without error, and missing preview retained its error/link.
+- The already-connected human Phantom wallet restored after reload on the final
+  origin. Completed human deal and refund-dispute direct routes also reloaded;
+  Create completed its deployment check. No console errors or signatures observed.
+- Audited 164 uploaded file/directory paths: no local/env/keypair/private-key files.
+  Public evidence refreshed in deployment/vercel-verification.json.
 
 ## Assigned frontend fixes — 2026-10-13
 
@@ -175,11 +186,10 @@ limits. One setup demo had an incorrect asset commit reference and was retired
 through the actual dispute/refund path; its receipts are preserved separately.
 
 The reported human successful Phantom flow and refund dispute are confirmed by
-real Devnet receipts. The first stable Vercel build and its public/Chrome checks
-passed. The combined final version still needs part 2's validator integration,
-delivery/preview/receipt/dispute UX changes and cross-platform transport test fix,
-followed by peer review and deployment of the combined commit.
-Actual new-origin Phantom/media acceptance, other settlement outcomes/cancellation,
+real Devnet receipts. The combined stable Vercel build, shared media validator,
+delivery/preview/receipt/dispute UX and cross-platform correction are published.
+Hosted media playback and actual remembered Phantom restoration are checked.
+Actual fresh-deal submission/payment, other settlement outcomes/cancellation,
 product-demo recording, founder-name verification, pitch recording and final
 hackathon submission remain joint/part 2 work. No submission was performed.
 
